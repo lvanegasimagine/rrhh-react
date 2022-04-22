@@ -22,14 +22,14 @@ const AppRoutes = () => {
         <Routes>
           <Route path="/" element={<DashboardScreen />} />
           <Route path="nuevo-empleado" element={<NuevoEmpleadoScreen />} />
-          <Route path="editar-empleado" element={<EditarEmpleadoScreen />} />
+          <Route path="editar-empleado/:id" element={<EditarEmpleadoScreen />} />
           <Route path="listar-empleado" element={<ListaEmpleadoScreen />} />
           <Route
             path="nuevo-departamento"
             element={<NuevoDepartamentoScreen />}
           />
           <Route
-            path="editar-departamento"
+            path="editar-departamento/:id"
             element={<EditarDepartamentoScreen />}
           />
           <Route
@@ -37,7 +37,7 @@ const AppRoutes = () => {
             element={<ListarDepartamentoScreen />}
           />
           <Route path="nuevo-cargo" element={<NuevoCargoScreen />} />
-          <Route path="editar-cargo" element={<EditarCargoScreen />} />
+          <Route path="editar-cargo/:id" element={<EditarCargoScreen />} />
           <Route path="listar-cargo" element={<ListarCargoScreen />} />
         </Routes>
       </Container>
