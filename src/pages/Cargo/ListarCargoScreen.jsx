@@ -9,19 +9,21 @@ import {
   Tr,
   Stack,
   IconButton,
-  Button
+  Button,
 } from '@chakra-ui/react';
 import { FaPlus, FaPen, FaTrash } from 'react-icons/fa';
-
+import { Link as ReachLink } from 'react-router-dom';
 
 const ListarCargoScreen = () => {
   return (
     <>
       <Text fontSize="6xl">Cargo</Text>
-      <Stack direction="row" spacing={4}  pt="15" pb="15">
-        <Button leftIcon={<FaPlus />} colorScheme="teal" variant="solid">
-          Agregar Cargo
-        </Button>
+      <Stack direction="row" spacing={4} pt="15" pb="15">
+        <ReachLink to="/nuevo-cargo">
+          <Button leftIcon={<FaPlus />} colorScheme="teal" variant="solid">
+            Agregar Cargo
+          </Button>
+        </ReachLink>
       </Stack>
       <TableContainer p={'2.5'}>
         <Table variant="simple">

@@ -12,15 +12,18 @@ import {
   Tr,
 } from '@chakra-ui/react';
 import { FaPlus, FaPen, FaTrash } from 'react-icons/fa';
+import { Link as ReachLink } from 'react-router-dom';
 
 const ListarDepartamentoScreen = () => {
   return (
     <>
       <Text fontSize="6xl">Departamento</Text>
       <Stack direction="row" spacing={4} pt="15" pb="15">
-        <Button leftIcon={<FaPlus />} colorScheme="teal" variant="solid">
-          Agregar Departamento
-        </Button>
+      <ReachLink to="/nuevo-departamento">
+          <Button leftIcon={<FaPlus />} colorScheme="teal" variant="solid">
+            Agregar Departamento
+          </Button>
+        </ReachLink>
       </Stack>
       <TableContainer p={'2.5'}>
         <Table variant="simple">

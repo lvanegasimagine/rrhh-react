@@ -9,18 +9,22 @@ import {
   Tr,
   Button,
   Stack,
-  IconButton
+  IconButton,
 } from '@chakra-ui/react';
 import { FaPlus, FaPen, FaTrash } from 'react-icons/fa';
+import { Link as ReachLink } from 'react-router-dom';
 
 const ListaEmpleadoScreen = () => {
   return (
     <>
       <Text fontSize="6xl">Empleado</Text>
+
       <Stack direction="row" spacing={4} pt="15" pb="15">
-        <Button leftIcon={<FaPlus />} colorScheme="teal" variant="solid">
-          Agregar Empleado
-        </Button>
+        <ReachLink to="/nuevo-empleado">
+          <Button leftIcon={<FaPlus />} colorScheme="teal" variant="solid">
+            Agregar Empleado
+          </Button>
+        </ReachLink>
       </Stack>
       <TableContainer p={'2.5'}>
         <Table variant="simple">
