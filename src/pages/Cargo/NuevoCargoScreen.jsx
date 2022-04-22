@@ -9,6 +9,7 @@ import {
   Stack,
   Button,
   Select,
+  Textarea,
 } from '@chakra-ui/react';
 import React from 'react';
 import { FaRegSave, FaArrowLeft } from 'react-icons/fa';
@@ -29,14 +30,19 @@ const NuevoCargoScreen = () => {
         </FormControl>
         <FormControl isRequired paddingTop={'7'}>
           <FormLabel htmlFor="departamento">Departamento</FormLabel>
-          <Select id="departamento" placeholder="Seleccione Departamento a asignar" maxW={'70%'}>
+          <Select
+            id="departamento"
+            placeholder="Seleccione Departamento a asignar"
+            maxW={'70%'}
+          >
             <option>United Arab Emirates</option>
             <option>Nigeria</option>
           </Select>
         </FormControl>
-        <FormControl isRequired paddingTop={'10'}>
-          <FormLabel htmlFor="departamento">Telefono Corporativo</FormLabel>
-          <Input type="text" id="departamento" maxW={'70%'} />
+        <FormControl isRequired paddingTop={'7'}>
+          <FormLabel htmlFor="departamento">Descripcion</FormLabel>
+
+          <Textarea maxW={'70%'} />
         </FormControl>
         <Stack direction="row" spacing={4} pt="25">
           <Button leftIcon={<FaRegSave />} colorScheme="blue" variant="solid">
