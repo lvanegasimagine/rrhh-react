@@ -7,13 +7,23 @@ import {
   Th,
   Thead,
   Tr,
+  Stack,
+  IconButton,
+  Button
 } from '@chakra-ui/react';
+import { FaPlus, FaPen, FaTrash } from 'react-icons/fa';
+
 
 const ListarCargoScreen = () => {
   return (
     <>
       <Text fontSize="6xl">Cargo</Text>
-      <TableContainer>
+      <Stack direction="row" spacing={4}  pt="15" pb="15">
+        <Button leftIcon={<FaPlus />} colorScheme="teal" variant="solid">
+          Agregar Cargo
+        </Button>
+      </Stack>
+      <TableContainer p={'2.5'}>
         <Table variant="simple">
           <Thead>
             <Tr>
@@ -37,6 +47,20 @@ const ListarCargoScreen = () => {
               <Td>Título 1</Td>
               <Td>Título 1</Td>
               <Td>Título 1</Td>
+              <Td>
+                <Stack direction="row" spacing={2}>
+                  <IconButton
+                    colorScheme="blue"
+                    aria-label="Search database"
+                    icon={<FaPen />}
+                  />
+                  <IconButton
+                    colorScheme="red"
+                    aria-label="Search database"
+                    icon={<FaTrash />}
+                  />
+                </Stack>
+              </Td>
             </Tr>
           </Tbody>
         </Table>
