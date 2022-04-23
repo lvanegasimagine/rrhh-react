@@ -10,53 +10,89 @@ import {
   MenuList,
   Text,
   useColorModeValue,
-} from "@chakra-ui/react";
-import { FaUserAlt } from "react-icons/fa";
-import { Link as ReachLink } from "react-router-dom";
-import ButtonModeDark from "../styled/ButtonModeDark";
+} from '@chakra-ui/react';
 
+import { FaUserAlt } from 'react-icons/fa';
+import { Link as ReachLink } from 'react-router-dom';
+import { useAuthContext } from '../hooks/useAuthContext';
+import { useLogout } from '../hooks/useLogout';
+import ButtonModeDark from '../styled/ButtonModeDark';
 const Navbar = () => {
+  const { user } = useAuthContext();
+  const { logout } = useLogout();
   const linkProps = {
     as: ReachLink,
     px: 2,
     py: 1,
-    rounded: "md",
+    rounded: 'md',
     _hover: {
-      textDecoration: "none",
-      bg: useColorModeValue("gray.200", "gray.700"),
+      textDecoration: 'none',
+      bg: useColorModeValue('gray.200', 'gray.700'),
     },
   };
 
   return (
-    <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
+    <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
       <Flex h={16} alignItems="center" justifyContent="space-between">
-        <HStack as="nav" spacing={4} display={{ base: "none", md: "flex" }}>
-          <Link colorScheme="teal" variant="solid" to="/" {...linkProps}>
-            <Text fontSize="xl">ReactPro RRHH</Text>
-          </Link>
-          <Link to="listar-empleado" {...linkProps}>
-            <Text>Empleado</Text>
-          </Link>
-          <Link to="listar-cargo" {...linkProps}>
-            <Text>Cargo</Text>
-          </Link>
-          <Link to="listar-departamento" {...linkProps}>
-            <Text>Departamento</Text>
-          </Link>
+        <HStack as="nav" spacing={4} display={{ base: 'none', md: 'flex' }}>
+          {user && (
+            <>
+              <Link colorScheme="teal" variant="solid" to="/" {...linkProps}>
+                <Text fontSize="xl">ReactPro RRHH</Text>
+              </Link>
+              <Link to="listar-empleado" {...linkProps}>
+                <Text>Empleado</Text>
+              </Link>
+              <Link to="listar-cargo" {...linkProps}>
+                <Text>Cargo</Text>
+              </Link>
+              <Link to="listar-departamento" {...linkProps}>
+                <Text>Departamento</Text>
+              </Link>
+              <Flex alignItems="center">
+                <Menu>
+                  <MenuButton
+                    as={IconButton}
+                    aria-label="Options"
+                    icon={<FaUserAlt />}
+                    variant="outline"
+                  />
+                  <MenuList>
+                    <MenuItem>Editar Usuario</MenuItem>
+                    <MenuItem onClick={logout}>Logout</MenuItem>
+                  </MenuList>
+                  <ButtonModeDark />
+                </Menu>
+              </Flex>
+            </>
+          )}
         </HStack>
-
         <Flex alignItems="center">
           <Menu>
-            <MenuButton
-              as={IconButton}
-              aria-label="Options"
-              icon={<FaUserAlt />}
-              variant="outline"
-            />
-            <MenuList>
-              <MenuItem>Editar Usuario</MenuItem>
-              <MenuItem>Logout</MenuItem>
-            </MenuList>
+            {!user && (
+              <>
+                <Link to="login" {...linkProps}>
+                  <Text>Login</Text>
+                </Link>
+                <Link to="signup" {...linkProps}>
+                  <Text>Signup</Text>
+                </Link>
+              </>
+            )}
+            {user && (
+              <>
+                <MenuButton
+                  as={IconButton}
+                  aria-label="Options"
+                  icon={<FaUserAlt />}
+                  variant="outline"
+                />
+                <MenuList>
+                  <MenuItem>Editar Usuario</MenuItem>
+                  <MenuItem onClick={logout}>Logout</MenuItem>
+                </MenuList>
+              </>
+            )}
             <ButtonModeDark />
           </Menu>
         </Flex>

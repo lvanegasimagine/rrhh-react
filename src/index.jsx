@@ -4,6 +4,7 @@ import App from './App';
 import { ChakraProvider, ColorModeScript, extendTheme } from '@chakra-ui/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
+import { AuthContextProvider } from './context/AuthContext';
 const config = {
   initialColorMode: 'light',
   useSystemColorMode: false,
@@ -20,9 +21,11 @@ root.render(
   <React.StrictMode>
     <ChakraProvider>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      <Router>
-        <App />
-      </Router>
+      <AuthContextProvider>
+        <Router>
+          <App />
+        </Router>
+      </AuthContextProvider>
     </ChakraProvider>
   </React.StrictMode>
 );

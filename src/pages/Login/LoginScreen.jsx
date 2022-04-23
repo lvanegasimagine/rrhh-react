@@ -1,48 +1,59 @@
-import { Button, FormControl, FormErrorMessage, FormLabel, Heading, Input, VStack } from '@chakra-ui/react'
-import React from 'react'
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+  VStack,
+} from '@chakra-ui/react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useLogin } from '../../hooks/useLogin';
 
 const LoginScreen = () => {
+  let navigate = useNavigate();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { login, error, isPending} = useLogin();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login(email, password);
+    navigate("/");
+  }
+
   return (
     <VStack
       as="form"
       mx="auto"
-      w={{ base: "90%", md: 500 }}
+      w={{ base: '90%', md: 500 }}
       h="100vh"
       justifyContent="center"
-      // onSubmit={formik.handleSubmit}
       autoComplete="off"
+      onSubmit={handleSubmit}
     >
-      <Heading>Sign Up</Heading>
-      <FormControl
-        // isInvalid={formik.errors.username && formik.touched.username}
-      >
-        <FormLabel>User Name </FormLabel>
-        <Input
-          name="username"
-          placeholder="Enter username"
-          // {...formik.getFieldProps("username")} // Opcion 1 - llama a todas las props (handleChange, value, handleBlur, etc)
-        />
-        {/* <FormErrorMessage>{formik.errors.username}</FormErrorMessage> */}
+      <Heading>Login</Heading>
+      <FormControl>
+        <FormLabel>Email </FormLabel>
+        <Input value={email} onChange={(e) => setEmail(e.target.value)} name="email" placeholder="Enter email" />
       </FormControl>
-      <FormControl
-        // isInvalid={formik.errors.password && formik.touched.password}
-      >
+      <FormControl>
         <FormLabel>Password </FormLabel>
-        <Input
-          type="password"
-          name="password"
-          placeholder="Enter Password"
-          // value={formik.values.password}
-          // onChange={formik.handleChange}
-          // onBlur={formik.handleBlur}
-        />
-        {/* <FormErrorMessage>{formik.errors.password}</FormErrorMessage> */}
+        <Input value={password} onChange={(e) => setPassword(e.target.value)} type="password" name="password" placeholder="Enter Password" />
       </FormControl>
-      <Button type="submit" colorScheme="blue">
+      {/* <Button type="submit" colorScheme="blue">
         Submit
-      </Button>
+      </Button> */}
+      {!isPending && <Button type="submit" colorScheme="blue">
+        Login
+      </Button> }
+      {isPending && <Button type="submit" colorScheme="blue">
+        Loading...
+      </Button>}
+      {error && <p className="error">{error}</p>}
     </VStack>
-  )
-}
+  );
+};
 
-export default LoginScreen
+export default LoginScreen;
