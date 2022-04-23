@@ -9,6 +9,7 @@ import {
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLogin } from '../../hooks/useLogin';
+import { BsBoxArrowInRight } from "react-icons/bs";
 
 const LoginScreen = () => {
   let navigate = useNavigate();
@@ -28,12 +29,12 @@ const LoginScreen = () => {
       as="form"
       mx="auto"
       w={{ base: '90%', md: 500 }}
-      h="100vh"
+      h="90vh"
       justifyContent="center"
       autoComplete="off"
       onSubmit={handleSubmit}
     >
-      <Heading>Login</Heading>
+      <Heading pb={10}>Login</Heading>
       <FormControl>
         <FormLabel>Email </FormLabel>
         <Input value={email} onChange={(e) => setEmail(e.target.value)} name="email" placeholder="Enter email" />
@@ -42,11 +43,8 @@ const LoginScreen = () => {
         <FormLabel>Password </FormLabel>
         <Input value={password} onChange={(e) => setPassword(e.target.value)} type="password" name="password" placeholder="Enter Password" />
       </FormControl>
-      {/* <Button type="submit" colorScheme="blue">
-        Submit
-      </Button> */}
       {!isPending && <Button type="submit" colorScheme="blue">
-        Login
+        <BsBoxArrowInRight/> &nbsp; Login
       </Button> }
       {isPending && <Button type="submit" colorScheme="blue">
         Loading...

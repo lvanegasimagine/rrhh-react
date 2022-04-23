@@ -49,21 +49,6 @@ const Navbar = () => {
               <Link to="listar-departamento" {...linkProps}>
                 <Text>Departamento</Text>
               </Link>
-              <Flex alignItems="center">
-                <Menu>
-                  <MenuButton
-                    as={IconButton}
-                    aria-label="Options"
-                    icon={<FaUserAlt />}
-                    variant="outline"
-                  />
-                  <MenuList>
-                    <MenuItem>Editar Usuario</MenuItem>
-                    <MenuItem onClick={logout}>Logout</MenuItem>
-                  </MenuList>
-                  <ButtonModeDark />
-                </Menu>
-              </Flex>
             </>
           )}
         </HStack>

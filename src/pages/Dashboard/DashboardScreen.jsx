@@ -2,14 +2,16 @@ import { Box, SimpleGrid, Grid, GridItem, Text } from '@chakra-ui/react';
 import { BsPerson } from 'react-icons/bs';
 import { FiServer } from 'react-icons/fi';
 import { GoLocation } from 'react-icons/go';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import StatsCard from '../../styled/StatsCard';
 
 const DashboardScreen = () => {
+  const { user } = useAuthContext();
   return (
     <>
       <Grid templateColumns="repeat(5, 1fr)" gap={4} m={35}>
-        <GridItem colSpan={6} h="10" bg="tomato">
-          <Text fontSize="4xl"> Bienvenido a la liga de la justicia</Text>
+        <GridItem colSpan={6} h="10">
+          <Text fontSize="4xl"> Bienvenido {user.displayName}</Text>
         </GridItem>
       </Grid>
       <Box
