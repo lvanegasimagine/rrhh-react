@@ -1,68 +1,103 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# ReactPro Recursos Humanos
 
-## Available Scripts
+Es una aplicacion para llevar el registro de empleados de una organizacion, el cual se tiene como meta ir expandiendo el sistema mediante modulos.
 
-In the project directory, you can run:
+***
 
-### `npm start`
+## Herramientas a utilizar:
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### **- Backend**
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- Firebase
+- Nodejs
+- Express
+- MongoDB
 
-### `npm test`
+#### **- Frontend**
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- React
 
-### `npm run build`
+***
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Entidades
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Usuario
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- IdUsuario
+- DisplayName
+- Online
+- PhotoUrl
+- CreatedAt
 
-### `npm run eject`
+## Empleado
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- IdEmpleado
+- IdDepartamento
+- IdCargo
+- Nombre
+- Apellido
+- Sexo
+- Direccion
+- FechaNacimiento
+- Cedula
+- LugarNacimiento
+- Telefono
+- EstadoCivil
+- CorreoElectronico
+- CreatedAt
+- UpdatedAt
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Cargo
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- IdCargo
+- IdDepartamento
+- NombreCargo
+- Descripcion
+- CreatedAt
+- UpdatedAt
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Departamento
 
-## Learn More
+- IdDepartamento
+- NombreDepartamento
+- EmailCorporativo
+- TelefonoCorporativo
+- CreatedAt
+- UpdatedAt
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# Relaciones
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Un *Departamento* tiene asignado varios *Cargos*.
+- Un *Cargo* tiene asignado un *Departamento*.
+- Un *Empleado* tiene asignado un *Cargo* y pertenece a un *Departamento*
 
-### Code Splitting
+# Funciones
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+- Crear Usuario
+- Editar Usuario
+- Crear Cargo
+- Editar Cargo
+- Actualizar Cargo
+- Eliminar Cargo
+- Crear Departamento
+- Editar Departamento
+- Actualizar Departamento
+- Eliminar Departamento
+- Crear Empleado
+- Editar Empleado
+- Actualizar Empleado
+- Eliminar Empleado
 
-### Analyzing the Bundle Size
+# Pantallas
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+- Login Usuario
+- Dashboard y Estadisticas
+- Listado Cargo
+- Listado Departamento
+- Listado Empleado
+- Detalle de Empleado
+- Crear/Editar Empleado
+- Crear/Editar Cargo
+- Crear/Editar Departamento
 
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+---

@@ -11,6 +11,7 @@ import NuevoDepartamentoScreen from '../pages/Departamento/NuevoDepartamentoScre
 import EditarEmpleadoScreen from '../pages/Empleado/EditarEmpleadoScreen';
 import ListaEmpleadoScreen from '../pages/Empleado/ListaEmpleadoScreen';
 import NuevoEmpleadoScreen from '../pages/Empleado/NuevoEmpleadoScreen';
+import LoginScreen from '../pages/Login/LoginScreen';
 import NotFoundScreen from '../pages/NotFound/NotFoundScreen';
 import Navbar from '../shared/Nabvar';
 
@@ -21,6 +22,7 @@ const AppRoutes = () => {
       <Container maxW="container.xl">
         <Routes>
           <Route path="/" element={<DashboardScreen />} />
+          <Route path="login" element={<LoginScreen />} />
           <Route path="nuevo-empleado" element={<NuevoEmpleadoScreen />} />
           <Route path="editar-empleado/:id" element={<EditarEmpleadoScreen />} />
           <Route path="listar-empleado" element={<ListaEmpleadoScreen />} />
