@@ -66,6 +66,9 @@ const Navbar = () => {
             )}
             {user && (
               <>
+                <strong>
+                  <Text>Bienvenido {user.displayName} &nbsp;</Text>
+                </strong>
                 <MenuButton
                   as={IconButton}
                   aria-label="Options"

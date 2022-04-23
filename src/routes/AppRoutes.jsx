@@ -19,7 +19,6 @@ import Navbar from '../shared/Nabvar';
 
 const AppRoutes = () => {
   const { authIsReady, user } = useAuthContext();
-  let navigate = useNavigate();
   return (
     <>
       {authIsReady && (
@@ -54,7 +53,7 @@ const AppRoutes = () => {
               />
               <Route
                 path="editar-departamento/:id"
-                element={user ? <EditarEmpleadoScreen /> : <LoginScreen />}
+                element={user ? <EditarDepartamentoScreen /> : <LoginScreen />}
               />
               <Route
                 path="listar-departamento"
