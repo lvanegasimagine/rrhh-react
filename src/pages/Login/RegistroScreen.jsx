@@ -49,7 +49,7 @@ const RegistroScreen = () => {
           onSubmit={formik.handleSubmit}
           autoComplete="off"
         >
-          <Heading pb={10}>Login</Heading>
+          <Heading pb={10}>Registro</Heading>
           <TextField
             name="displayName"
             label="Nombre de Usuario"
@@ -58,7 +58,6 @@ const RegistroScreen = () => {
           <TextField
             requir={true}
             name="email"
-            type="password"
             label="Correo Electronico"
             placeholder="Digita Tu Correo Electronico"
           />
