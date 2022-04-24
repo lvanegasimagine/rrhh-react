@@ -1,6 +1,6 @@
 import { Container } from '@chakra-ui/react';
 import React from 'react';
-import { Routes, Route, useNavigate, BrowserRouter } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import EditarCargoScreen from '../pages/Cargo/EditarCargoScreen';
 import ListarCargoScreen from '../pages/Cargo/ListarCargoScreen';
@@ -70,6 +70,10 @@ const AppRoutes = () => {
               <Route
                 path="listar-cargo"
                 element={user ? <ListarCargoScreen /> : <LoginScreen />}
+              />
+              <Route
+                path="*"
+                element={user ? <NotFoundScreen /> : <LoginScreen />}
               />
             </Routes>
           </Container>
