@@ -1,31 +1,80 @@
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  Heading,
-  Input,
-  VStack,
-} from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { Button, Text, Heading, VStack } from '@chakra-ui/react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLogin } from '../../hooks/useLogin';
-import { BsBoxArrowInRight } from "react-icons/bs";
+import { BsBoxArrowInRight } from 'react-icons/bs';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import TextField from '../../styled/TextField';
 
 const LoginScreen = () => {
   let navigate = useNavigate();
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const { login, error, isPending} = useLogin();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    login(email, password);
-    navigate("/");
-  }
+  const { login, error, isPending } = useLogin();
 
   return (
-    <VStack
+    <Formik
+      initialValues={{ email: '', password: '' }}
+      validationSchema={Yup.object({
+        email: Yup.string()
+          .required('Correo Obligatorio')
+          .email('Correo Invalido'),
+        password: Yup.string()
+          .required('Contraseña Obligatoria')
+          .min(6, 'Contraseña debe tener al menos 6 caracteres'),
+      })}
+      onSubmit={(values, actions) => {
+        const { email, password } = values;
+        login(email, password);
+        navigate('/');
+        actions.resetForm();
+      }}
+    >
+      {formik => (
+        <VStack
+          as="form"
+          mx="auto"
+          w={{ base: '90%', md: 500 }}
+          h="90vh"
+          justifyContent="center"
+          onSubmit={formik.handleSubmit}
+          autoComplete="off"
+        >
+          <Heading pb={10}>Login</Heading>
+          <TextField
+            requir={true}
+            name="email"
+            label="Correo Electronico"
+            placeholder="Digita tu Correo Electronico"
+          />
+          <TextField
+            requir={true}
+            name="password"
+            type="password"
+            label="Contraseña"
+            placeholder="Digita tu Contraseña"
+          />
+
+          {!isPending && (
+            <Button type="submit" colorScheme="blue">
+              <BsBoxArrowInRight /> &nbsp; Login
+            </Button>
+          )}
+          {isPending && (
+            <Button type="submit" colorScheme="blue">
+              Loading...
+            </Button>
+          )}
+          {error && <Text className="error">{error}</Text>}
+        </VStack>
+      )}
+    </Formik>
+  );
+};
+
+export default LoginScreen;
+
+{
+  /* <VStack
       as="form"
       mx="auto"
       w={{ base: '90%', md: 500 }}
@@ -50,8 +99,5 @@ const LoginScreen = () => {
         Loading...
       </Button>}
       {error && <p className="error">{error}</p>}
-    </VStack>
-  );
-};
-
-export default LoginScreen;
+    </VStack> */
+}
