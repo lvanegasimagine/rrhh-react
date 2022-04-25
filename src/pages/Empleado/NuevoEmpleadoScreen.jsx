@@ -1,67 +1,143 @@
 import {
   Container,
+  Flex,
   VStack,
-  Text,
-  Box,
+  Heading,
+  Divider,
+  SimpleGrid,
+  GridItem,
   FormControl,
   FormLabel,
   Input,
-  Stack,
-  Button,
-  Select,
   Textarea,
-  Grid,
-  GridItem,
-  HStack,
-  StackDivider,
-  FormHelperText,
+  Select,
+  Button,
 } from '@chakra-ui/react';
-import React from 'react';
-import { FaRegSave, FaArrowLeft } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { FcCheckmark, FcCancel } from "react-icons/fc";
 
-const NuevoEmpleadoScreen = () => {
+export default function NuevoEmpleadoScreen() {
   return (
-    <>
-      <Text fontSize="2xl" paddingTop={'35'} paddingBottom={'2'}>
-        Nuevo Empleado
-      </Text>
-      <hr />
-      <Container maxW="container.xl" pt={5}>
-        <HStack spacing="auto">
-          <Box>
-            <FormControl>
-              <FormLabel htmlFor="email">Nombre</FormLabel>
-              <Input id="email" type="email" />
-              <FormHelperText>We'll never share your email.</FormHelperText>
-            </FormControl>
-          </Box>
-          <Box>
-            <FormControl>
-              <FormLabel htmlFor="email">Apellido</FormLabel>
-              <Input id="email" type="email" />
-              <FormHelperText>We'll never share your email.</FormHelperText>
-            </FormControl>
-          </Box>
-        </HStack>
-        {/* <VStack
-          divider={<StackDivider borderColor="gray.200" />}
-          spacing={4}
-          align="stretch"
+    <Container maxW="container.xl" p={0}>
+      <Flex h={'100vh'} py={20}>
+        <VStack
+          w={'full'}
+          h="full"
+          p={10}
+          spacing={10}
+          alignItems="flex-start"
+          // bg="blue.300"
         >
-          <Box h="40px" bg="yellow.200">
-            1
-          </Box>
-          <Box h="40px" bg="tomato">
-            2
-          </Box>
-          <Box h="40px" bg="pink.100">
-            3
-          </Box>
-        </VStack> */}
-      </Container>
-    </>
-  );
-};
+          <VStack spacing={3} alignItems="flex-start">
+            <Heading size="lg">Datos Personales</Heading>
+            <Divider w="full" orientation="horizontal" />
+          </VStack>
+          <SimpleGrid columns={3} columnGap={3} rowGap={6} w="full">
+            <GridItem colSpan={1}>
+              <FormControl>
+                <FormLabel>Nombre</FormLabel>
+                <Input placeholder="Digita tu nombre" />
+              </FormControl>
+            </GridItem>
+            <GridItem colSpan={1}>
+              <FormControl>
+                <FormLabel>Apellido</FormLabel>
+                <Input placeholder="Digita tu apellido" />
+              </FormControl>
+            </GridItem>
+            <GridItem colSpan={1}>
+              <FormControl>
+                <FormLabel>Cedula</FormLabel>
+                <Input placeholder="Digita tu cedula" />
+              </FormControl>
+            </GridItem>
+            <GridItem colSpan={3}>
+              <FormControl>
+                <FormLabel>Direccion</FormLabel>
+                <Textarea placeholder="Digita tu direccion" />
+              </FormControl>
+            </GridItem>
+            <GridItem colSpan={1}>
+              <FormControl>
+                <FormLabel>Fecha Nacimiento</FormLabel>
+                <Input type="date" placeholder="Selecciona fecha" />
+              </FormControl>
+            </GridItem>
+            <GridItem colSpan={1}>
+              <FormControl>
+                <FormLabel>Lugar Nacimiento</FormLabel>
+                <Input placeholder="Digita lugar de Nacimiento" />
+              </FormControl>
+            </GridItem>
+            <GridItem colSpan={1}>
+              <FormControl>
+                <FormLabel>Sexo</FormLabel>
+                <Select placeholder="Select Opcion">
+                  <option value="option1">Masculino</option>
+                  <option value="option2">Femenino </option>
+                  <option value="option3">No Binario</option>
+                </Select>
+              </FormControl>
+            </GridItem>
+            <GridItem colSpan={1}>
+              <FormControl>
+                <FormLabel>Estado Civil</FormLabel>
+                <Select>
+                  <option value="option1">Casado</option>
+                  <option value="option2">Soltero </option>
+                  <option value="option3">Viudo</option>
+                </Select>
+              </FormControl>
+            </GridItem>
+            <GridItem colSpan={1}>
+              <FormControl>
+                <FormLabel>Celular</FormLabel>
+                <Input placeholder="Digita Numero Celular" />
+              </FormControl>
+            </GridItem>
+            <GridItem colSpan={1}>
+              <FormControl>
+                <FormLabel>Correo Electronico</FormLabel>
+                <Input type="email" placeholder="Digita correo personal" />
+              </FormControl>
+            </GridItem>
+          </SimpleGrid>
+          <VStack spacing={3} alignItems="flex-start">
+            <Heading size="lg" >Asignaciones</Heading>
+            <Divider w="full" orientation="horizontal" />
+          </VStack>
+          <SimpleGrid columns={2} columnGap={3} rowGap={6} w="full">
+            <GridItem colSpan={1}>
+              <FormControl>
+                <FormLabel>Cargo a Asignar</FormLabel>
+                <Select>
+                  <option value="option1">Jefe de Cobro</option>
+                  <option value="option2">Vividor</option>
+                  <option value="option3">El Amigo</option>
+                </Select>
+              </FormControl>
+            </GridItem>
+            <GridItem colSpan={1}>
+              <FormControl>
+                <FormLabel>Departamento Laboral</FormLabel>
+                <Select>
+                  <option value="option1">Plan Playa Verde</option>
+                  <option value="option2">Area Tecnica </option>
+                  <option value="option3">Arquitectura</option>
+                </Select>
+              </FormControl>
+            </GridItem>
+            <GridItem colSpan={1}>
+              <Button size='lg' w='full'> <FcCheckmark/> &nbsp; Guardar</Button>
+            </GridItem>
+            <GridItem colSpan={1}>
+              <Button size='lg' w='full'> <FcCancel/> &nbsp; Cancelar</Button>
+            </GridItem>
+          </SimpleGrid>
+        </VStack>
+        {/* <VStack w={'full'} h='full' p={10} spacing={10} alignItems='flex-start' bg='gray.500'>
 
-export default NuevoEmpleadoScreen;
+          </VStack> */}
+      </Flex>
+    </Container>
+  );
+}

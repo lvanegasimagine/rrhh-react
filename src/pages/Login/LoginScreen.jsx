@@ -13,7 +13,7 @@ const LoginScreen = () => {
 
   return (
     <Formik
-      initialValues={{ email: '', password: '' }}
+      initialValues={{ email: 'dinosaurio@dinosaurio.com', password: '123456' }}
       validationSchema={Yup.object({
         email: Yup.string()
           .required('Correo Obligatorio')
