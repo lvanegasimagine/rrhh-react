@@ -13,12 +13,16 @@ import {
   Select,
   Button,
 } from '@chakra-ui/react';
-import { FcCheckmark, FcCancel } from "react-icons/fc";
+import { FcCheckmark, FcCancel } from 'react-icons/fc';
 
 export default function NuevoEmpleadoScreen() {
   return (
     <Container maxW="container.xl" p={0}>
-      <Flex h={'100vh'} py={20}>
+      <Flex
+        h={{ base: 'auto', md: '100vh' }}
+        py={[0, 10, 20]}
+        direction={{ base: 'column-reverse', md: 'row' }}
+      >
         <VStack
           w={'full'}
           h="full"
@@ -102,7 +106,7 @@ export default function NuevoEmpleadoScreen() {
             </GridItem>
           </SimpleGrid>
           <VStack spacing={3} alignItems="flex-start">
-            <Heading size="lg" >Asignaciones</Heading>
+            <Heading size="lg">Asignaciones</Heading>
             <Divider w="full" orientation="horizontal" />
           </VStack>
           <SimpleGrid columns={2} columnGap={3} rowGap={6} w="full">
@@ -126,17 +130,20 @@ export default function NuevoEmpleadoScreen() {
                 </Select>
               </FormControl>
             </GridItem>
-            <GridItem colSpan={1}>
-              <Button size='lg' w='full'> <FcCheckmark/> &nbsp; Guardar</Button>
+            <GridItem colSpan={1} pt="2">
+              <Button size="lg" w="full" colorScheme="facebook">
+                {' '}
+                <FcCheckmark /> &nbsp; Guardar
+              </Button>
             </GridItem>
-            <GridItem colSpan={1}>
-              <Button size='lg' w='full'> <FcCancel/> &nbsp; Cancelar</Button>
+            <GridItem colSpan={1} pt="2">
+              <Button size="lg" w="full" colorScheme="red">
+                {' '}
+                <FcCancel /> &nbsp; Cancelar
+              </Button>
             </GridItem>
           </SimpleGrid>
         </VStack>
-        {/* <VStack w={'full'} h='full' p={10} spacing={10} alignItems='flex-start' bg='gray.500'>
-
-          </VStack> */}
       </Flex>
     </Container>
   );
