@@ -22,8 +22,8 @@ const ListarDepartamentoScreen = () => {
     getDepartamentos,{
       retry: 2,
       retryDelay: 1000,
-      staleTime: 30000,
-      cacheTime: 3000
+      // staleTime: 30000,
+      // cacheTime: 3000
     }
   );
 
@@ -34,8 +34,8 @@ const ListarDepartamentoScreen = () => {
   console.log(data);
   return (
     <>
-    {isLoading && <div>Loading...</div>}
-    {isFetching && <div>Fetching...</div>}
+    {/* {isLoading && <div>Loading...</div>} */}
+    {/* {isFetching && <div>Fetching...</div>} */}
       <Text fontSize="6xl">Departamento</Text>
       <Stack direction="row" spacing={4} pt="15" pb="15">
         <ReachLink to="/nuevo-departamento">

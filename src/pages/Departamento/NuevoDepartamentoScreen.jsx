@@ -11,25 +11,26 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { FaRegSave, FaArrowLeft } from 'react-icons/fa';
-import { useMutation } from 'react-query';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import TextField from '../../styled/TextField';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { useMutateDepartamento } from '../../hooks/useMutateDepartamento';
 
 const NuevoDepartamentoScreen = () => {
+  let navigate = useNavigate();
+
+  const { mutate } = useMutateDepartamento();
+
   return (
     <Formik
       initialValues={{
-        nombre_departamento: '',
-        email_corporativo: '',
-        telefono_corporativo: '',
+        nombre_departamento: 'hola',
+        email_corporativo: 'mundo@mund.com',
+        telefono_corporativo: '9874561',
       }}
       validationSchema={Yup.object({
-        nombre_departamento: Yup.string().min(
-          8,
-          'Nombre debe tener al menos 6 caracteres'
-        ),
+        nombre_departamento: Yup.string().required('Correo Obligatorio'),
         email_corporativo: Yup.string()
           .required('Correo Obligatorio')
           .email('Correo Invalido'),
@@ -38,10 +39,12 @@ const NuevoDepartamentoScreen = () => {
           .max(9, 'Maximo 9 Caracteres'),
       })}
       onSubmit={(values, actions) => {
-        const { email, password, displayName } = values;
-        console.log(values);
-        // signup(email, password, displayName);
-        // navigate('/');
+        mutate(values,{
+          onSuccess: () => {
+            actions.setSubmitting(false);
+            navigate('/listar-departamento');
+          }
+        });
         actions.resetForm();
       }}
     >
@@ -57,6 +60,7 @@ const NuevoDepartamentoScreen = () => {
             w="100%"
             p={4}
             onSubmit={formik.handleSubmit}
+            autoComplete="off"
           >
             <TextField
               top={10}
