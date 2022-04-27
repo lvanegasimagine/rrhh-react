@@ -1,9 +1,6 @@
 import {
   Button,
-  FormControl,
-  FormLabel,
   Heading,
-  Input,
   Text,
   VStack,
 } from '@chakra-ui/react';

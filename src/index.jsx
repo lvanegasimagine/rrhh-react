@@ -6,7 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
 import { AuthContextProvider } from './context/AuthContext';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools'
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 const queryClient = new QueryClient();
 
@@ -27,25 +27,13 @@ root.render(
     <ChakraProvider>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <AuthContextProvider>
-      <QueryClientProvider client={queryClient}>
-        <Router>
-          <App />
-          <ReactQueryDevtools />
-        </Router>
-      </QueryClientProvider>
+        <QueryClientProvider client={queryClient}>
+          <Router>
+            <App />
+            <ReactQueryDevtools />
+          </Router>
+        </QueryClientProvider>
       </AuthContextProvider>
     </ChakraProvider>
   </React.StrictMode>
 );
-
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <ChakraProvider>
-//       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-//       <BrowserRouter>
-//         <App />
-//       </BrowserRouter>
-//     </ChakraProvider>
-//   </React.StrictMode>,
-//   document.getElementById('root')
-// );
