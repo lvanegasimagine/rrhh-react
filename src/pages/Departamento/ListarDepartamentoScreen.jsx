@@ -12,30 +12,39 @@ import {
   Tr,
 } from '@chakra-ui/react';
 import { FaPlus, FaPen, FaTrash } from 'react-icons/fa';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Link as ReachLink } from 'react-router-dom';
-import { getDepartamentos } from '../../api/departamentoResponse';
+import {
+  deleteDepartamento,
+  getDepartamentos,
+} from '../../api/departamentoResponse';
 
 const ListarDepartamentoScreen = () => {
-  const { data, error, isLoading, isFetching } = useQuery(
+  // const queryClient = useQueryClient();
+  const { data, error, isLoading } = useQuery(
     ['departamento'],
-    getDepartamentos,{
+    getDepartamentos,
+    {
       retry: 2,
       retryDelay: 1000,
-      // staleTime: 30000,
-      // cacheTime: 3000
     }
   );
 
-  if(error){
-    return <div>Error</div>
-  }
+  // const { mutate } = useMutation(deleteDepartamento, {
+  //   onsuccess: (data) => {
+  //     // queryClient.setQueryData(['departamento'], prevDepar => prevDepar.concat(data))
+  //     // queryClient.invalidateQueries(['departamento']);
+  //   },
+  // });
+
+  const eliminarDepartamento = id => {
+    console.log(id);
+    // mutate(id);
+  };
 
   console.log(data);
   return (
     <>
-    {/* {isLoading && <div>Loading...</div>} */}
-    {/* {isFetching && <div>Fetching...</div>} */}
       <Text fontSize="6xl">Departamento</Text>
       <Stack direction="row" spacing={4} pt="15" pb="15">
         <ReachLink to="/nuevo-departamento">
@@ -44,6 +53,7 @@ const ListarDepartamentoScreen = () => {
           </Button>
         </ReachLink>
       </Stack>
+
       <TableContainer p={'2.5'}>
         <Table variant="simple">
           <Thead>
@@ -78,9 +88,11 @@ const ListarDepartamentoScreen = () => {
                         icon={<FaPen />}
                       />
                       <IconButton
+                        type="button"
                         colorScheme="red"
                         aria-label="Search database"
                         icon={<FaTrash />}
+                        onClick={() => eliminarDepartamento(departamento._id)}
                       />
                     </Stack>
                   </Td>
