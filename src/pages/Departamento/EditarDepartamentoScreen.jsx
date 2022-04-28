@@ -1,25 +1,39 @@
-import { Box, Button, Container, Flex, Stack, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  Spinner,
+  Stack,
+  Text,
+} from '@chakra-ui/react';
 import { Formik } from 'formik';
-import React from 'react'
-import { useMutation, useQuery } from 'react-query';
+import React from 'react';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
-import { getDepartamento, updateDepartamento } from '../../api/departamentoResponse';
-import { useMutateDepartamento } from '../../hooks/useMutateDepartamento';
+import {
+  getDepartamento,
+  updateDepartamento,
+} from '../../api/departamentoResponse';
 import TextField from '../../styled/TextField';
 import { FaRegSave, FaArrowLeft } from 'react-icons/fa';
 
 const EditarDepartamentoScreen = () => {
   const { id } = useParams();
-  const { data, isLoading, isError, error } = useQuery(["departamento", {id} ], getDepartamento);
-  console.log( 'estamos aca perros', data);
+  const { data, isLoading, isError, error } = useQuery(
+    ['departamento', { id }],
+    getDepartamento
+  );
+  const { mutateAsync, isLoading: isMutating } = useMutation(updateDepartamento);
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   if (isLoading) {
     return (
       <Container>
         <Flex py="5" justifyContent="center">
-          {/* <Loader type="ThreeDots" color="#cccccc" height={30} /> */}
-          <h1>Cargando....</h1>
+          <Spinner size="xl" />
         </Flex>
       </Container>
     );
@@ -34,7 +48,7 @@ const EditarDepartamentoScreen = () => {
       </Container>
     );
   }
-  
+
   return (
     <Formik
       initialValues={{
@@ -52,14 +66,14 @@ const EditarDepartamentoScreen = () => {
           .max(9, 'Maximo 9 Caracteres'),
       })}
       onSubmit={(values, actions) => {
-        console.log(values);
-        // mutate(values, {
-        //   onSuccess: () => {
-        //     actions.resetForm();
-        //     actions.setSubmitting(false);
-        //     navigate('/listar-departamento');
-        //   },
-        // });
+         mutateAsync({...values, id }, {
+          onSuccess: () => {
+            queryClient.setQueryData(['departamento', { id }], values);
+            actions.resetForm();
+            actions.setSubmitting(false);
+            navigate('/listar-departamento');
+          },
+        });
       }}
     >
       {formik => (
@@ -124,7 +138,7 @@ const EditarDepartamentoScreen = () => {
         </>
       )}
     </Formik>
-  )
-}
+  );
+};
 
-export default EditarDepartamentoScreen
+export default EditarDepartamentoScreen;

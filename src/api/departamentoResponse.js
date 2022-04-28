@@ -14,12 +14,16 @@ export const getDepartamento = async ({ queryKey }) => {
 }
 
 export const createDepartamento = async (departamento) => {
-  const { data } = await axios.post(`${API}/departamento`, departamento);
+  const {data} = await axios.post(`${API}/departamento`, departamento);
+  
+  if (!data) {
+    throw new Error(data);
+  }
   return data;
 }
 
-export const updateDepartamento = async (departamento) => {
-  const { data } = await axios.put(`${API}/departamento/${departamento.id}`, departamento);
+export const updateDepartamento = async ({id, ...updateDeparmento}) => {
+  const { data } = await axios.put(`${API}/departamento/${id}`, updateDeparmento);
   return data;
 }
 
