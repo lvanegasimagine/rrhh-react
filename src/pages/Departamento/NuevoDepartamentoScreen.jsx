@@ -20,7 +20,7 @@ import { useMutateDepartamento } from '../../hooks/useMutateDepartamento';
 const NuevoDepartamentoScreen = () => {
   let navigate = useNavigate();
 
-  const { mutate } = useMutateDepartamento();
+  const { mutate, isError, error } = useMutateDepartamento();
 
   return (
     <Formik
@@ -50,6 +50,8 @@ const NuevoDepartamentoScreen = () => {
     >
       {formik => (
         <>
+        {isError && <Text>Error al crear el departamento</Text>}
+        {error && <Text>Error al crear el departamento</Text>}
           <Text fontSize="2xl" paddingTop={'35'} paddingBottom={'2'}>
             Nuevo departamento
           </Text>

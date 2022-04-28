@@ -14,12 +14,13 @@ export const getDepartamento = async ({ queryKey }) => {
 }
 
 export const createDepartamento = async (departamento) => {
-  const {data} = await axios.post(`${API}/departamento`, departamento);
-  
-  if (!data) {
-    throw new Error(data);
+  try {
+    const {data} = await axios.post(`${API}/departamento`, departamento);
+    return data;
+
+  } catch (error) {
+    // return throw new Error(error);
   }
-  return data;
 }
 
 export const updateDepartamento = async ({id, ...updateDeparmento}) => {

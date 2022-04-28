@@ -10,24 +10,25 @@ import {
 import { Formik } from 'formik';
 import React from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 import {
   getDepartamento,
   updateDepartamento,
 } from '../../api/departamentoResponse';
 import TextField from '../../styled/TextField';
-import { FaRegSave, FaArrowLeft } from 'react-icons/fa';
+import { FaArrowLeft, FaSync } from 'react-icons/fa';
 
 const EditarDepartamentoScreen = () => {
   const { id } = useParams();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const { data, isLoading, isError, error } = useQuery(
     ['departamento', { id }],
     getDepartamento
   );
-  const { mutateAsync, isLoading: isMutating } = useMutation(updateDepartamento);
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
+  const { mutateAsync, isLoading: isMutating } =
+    useMutation(updateDepartamento);
 
   if (isLoading) {
     return (
@@ -66,14 +67,17 @@ const EditarDepartamentoScreen = () => {
           .max(9, 'Maximo 9 Caracteres'),
       })}
       onSubmit={(values, actions) => {
-         mutateAsync({...values, id }, {
-          onSuccess: () => {
-            queryClient.setQueryData(['departamento', { id }], values);
-            actions.resetForm();
-            actions.setSubmitting(false);
-            navigate('/listar-departamento');
-          },
-        });
+        mutateAsync(
+          { ...values, id },
+          {
+            onSuccess: () => {
+              queryClient.setQueryData(['departamento', { id }], values);
+              actions.resetForm();
+              actions.setSubmitting(false);
+              navigate('/listar-departamento');
+            },
+          }
+        );
       }}
     >
       {formik => (
@@ -116,23 +120,31 @@ const EditarDepartamentoScreen = () => {
             />
 
             <Stack direction="row" spacing={4} pt="25">
-              <Button
-                type="submit"
-                leftIcon={<FaRegSave />}
-                colorScheme="blue"
-                variant="solid"
-              >
-                Guardar
-              </Button>
-              <Link to="/listar-departamento">
+              {isMutating ? (
                 <Button
-                  leftIcon={<FaArrowLeft />}
-                  colorScheme="orange"
+                  isLoading
+                  loadingText="Guardando..."
+                  colorScheme="teal"
                   variant="outline"
+                ></Button>
+              ) : (
+                <Button
+                  type="submit"
+                  leftIcon={<FaSync />}
+                  colorScheme="blue"
+                  variant="solid"
                 >
-                  Atras
+                  Actualizar
                 </Button>
-              </Link>
+              )}
+              <Button
+                leftIcon={<FaArrowLeft />}
+                colorScheme="orange"
+                variant="outline"
+                ml={4}
+              >
+                Atras
+              </Button>
             </Stack>
           </Box>
         </>

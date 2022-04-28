@@ -4,30 +4,33 @@ import {
   Table,
   TableContainer,
   Tbody,
-  Td,
   Text,
   Th,
   Thead,
   Tr,
 } from '@chakra-ui/react';
+
 import { FaPlus } from 'react-icons/fa';
-import { useQuery } from 'react-query';
 import { Link as ReachLink } from 'react-router-dom';
-import { getDepartamentos } from '../../api/departamentoResponse';
+import { useQueryDepartamento } from '../../hooks/useMutateDepartamento';
+import { AlertStyled } from '../../styled/AlertStyled';
+import { SpinnerStyled } from '../../styled/Spinner';
 import DepartamentoItemScreen from './DepartamentoItemScreen';
 
 const ListarDepartamentoScreen = () => {
-  const { data, error, isLoading } = useQuery(
-    ['departamento'],
-    getDepartamentos
-    // {
-    //   retry: 2,
-    //   retryDelay: 1000,
-    // }
-  );
+  const { data, isError, isLoading } = useQueryDepartamento();
 
-  if(error){
-    return <Text>Error</Text>
+  if (isLoading) {
+    return (
+      <>
+        <Text fontSize="6xl">Departamento</Text>
+        <SpinnerStyled/>
+      </>
+    );
+  }
+
+  if (isError) {
+    return <AlertStyled error={isError}/>;
   }
   return (
     <>
@@ -39,7 +42,6 @@ const ListarDepartamentoScreen = () => {
           </Button>
         </ReachLink>
       </Stack>
-
       <TableContainer p={'2.5'}>
         <Table variant="simple">
           <Thead>
