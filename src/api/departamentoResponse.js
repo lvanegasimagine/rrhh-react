@@ -7,6 +7,12 @@ export const getDepartamentos = async () => {
   return data;
 };
 
+export const getDepartamento = async ({ queryKey }) => {
+  const [_key, { id }] = queryKey;
+  const { data } = await axios.get(`${API}/departamento/${id}`);
+  return data;
+}
+
 export const createDepartamento = async (departamento) => {
   const { data } = await axios.post(`${API}/departamento`, departamento);
   return data;

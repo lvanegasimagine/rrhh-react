@@ -1,6 +1,5 @@
 import {
   Button,
-  IconButton,
   Stack,
   Table,
   TableContainer,
@@ -11,38 +10,25 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import { FaPlus, FaPen, FaTrash } from 'react-icons/fa';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { FaPlus } from 'react-icons/fa';
+import { useQuery } from 'react-query';
 import { Link as ReachLink } from 'react-router-dom';
-import {
-  deleteDepartamento,
-  getDepartamentos,
-} from '../../api/departamentoResponse';
+import { getDepartamentos } from '../../api/departamentoResponse';
+import DepartamentoItemScreen from './DepartamentoItemScreen';
 
 const ListarDepartamentoScreen = () => {
-  // const queryClient = useQueryClient();
   const { data, error, isLoading } = useQuery(
     ['departamento'],
-    getDepartamentos,
-    {
-      retry: 2,
-      retryDelay: 1000,
-    }
+    getDepartamentos
+    // {
+    //   retry: 2,
+    //   retryDelay: 1000,
+    // }
   );
 
-  // const { mutate } = useMutation(deleteDepartamento, {
-  //   onsuccess: (data) => {
-  //     // queryClient.setQueryData(['departamento'], prevDepar => prevDepar.concat(data))
-  //     // queryClient.invalidateQueries(['departamento']);
-  //   },
-  // });
-
-  const eliminarDepartamento = id => {
-    console.log(id);
-    // mutate(id);
-  };
-
-  console.log(data);
+  if(error){
+    return <Text>Error</Text>
+  }
   return (
     <>
       <Text fontSize="6xl">Departamento</Text>
@@ -58,7 +44,6 @@ const ListarDepartamentoScreen = () => {
         <Table variant="simple">
           <Thead>
             <Tr>
-              <Th>ID</Th>
               <Th>Nombre</Th>
               <Th>Correo Electronico</Th>
               <Th>Telefono de Area</Th>
@@ -66,38 +51,11 @@ const ListarDepartamentoScreen = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {data?.map((departamento, index) => (
-              <Tr
+            {data?.map(departamento => (
+              <DepartamentoItemScreen
                 key={departamento._id}
-                _hover={{
-                  textDecoration: 'none',
-                  bg: 'gray.200',
-                  cursor: 'pointer',
-                }}
-              >
-                <>
-                  <Td>{index + 1}</Td>
-                  <Td>{departamento.nombre_departamento}</Td>
-                  <Td> {departamento.email_corporativo}</Td>
-                  <Td> {departamento.telefono_corporativo}</Td>
-                  <Td>
-                    <Stack direction="row" spacing={2}>
-                      <IconButton
-                        colorScheme="blue"
-                        aria-label="Search database"
-                        icon={<FaPen />}
-                      />
-                      <IconButton
-                        type="button"
-                        colorScheme="red"
-                        aria-label="Search database"
-                        icon={<FaTrash />}
-                        onClick={() => eliminarDepartamento(departamento._id)}
-                      />
-                    </Stack>
-                  </Td>
-                </>
-              </Tr>
+                {...departamento}
+              />
             ))}
           </Tbody>
         </Table>

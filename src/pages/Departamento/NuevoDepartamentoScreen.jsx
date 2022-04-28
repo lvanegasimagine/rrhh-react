@@ -39,13 +39,13 @@ const NuevoDepartamentoScreen = () => {
           .max(9, 'Maximo 9 Caracteres'),
       })}
       onSubmit={(values, actions) => {
-        mutate(values,{
+        mutate(values, {
           onSuccess: () => {
+            actions.resetForm();
             actions.setSubmitting(false);
             navigate('/listar-departamento');
-          }
+          },
         });
-        actions.resetForm();
       }}
     >
       {formik => (
