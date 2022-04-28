@@ -1,21 +1,13 @@
 import { Container } from '@chakra-ui/react';
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
-import EditarCargoScreen from '../pages/Cargo/EditarCargoScreen';
-import ListarCargoScreen from '../pages/Cargo/ListarCargoScreen';
-import NuevoCargoScreen from '../pages/Cargo/NuevoCargoScreen';
-import DashboardScreen from '../pages/Dashboard/DashboardScreen';
-import EditarDepartamentoScreen from '../pages/Departamento/EditarDepartamentoScreen';
-import ListarDepartamentoScreen from '../pages/Departamento/ListarDepartamentoScreen';
-import NuevoDepartamentoScreen from '../pages/Departamento/NuevoDepartamentoScreen';
-import EditarEmpleadoScreen from '../pages/Empleado/EditarEmpleadoScreen';
-import ListaEmpleadoScreen from '../pages/Empleado/ListaEmpleadoScreen';
-import NuevoEmpleadoScreen from '../pages/Empleado/NuevoEmpleadoScreen';
-import LoginScreen from '../pages/Login/LoginScreen';
-import RegistroScreen from '../pages/Login/RegistroScreen';
-import NotFoundScreen from '../pages/NotFound/NotFoundScreen';
-import Navbar from '../shared/Nabvar';
+import { ListaEmpleadoScreen, NuevoEmpleadoScreen, EditarEmpleadoScreen  } from '../pages/Empleado';
+import { ListarDepartamentoScreen, NuevoDepartamentoScreen, EditarDepartamentoScreen } from '../pages/Departamento';
+import { ListarCargoScreen, NuevoCargoScreen, EditarCargoScreen } from '../pages/Cargo';
+import { DashboardScreen } from '../pages/Dashboard';
+import { NotFoundScreen } from '../pages/NotFound';
+import { LoginScreen, RegistroScreen } from '../pages/Login';
+import { Navbar } from '../shared';
 
 const AppRoutes = () => {
   const { authIsReady, user } = useAuthContext();

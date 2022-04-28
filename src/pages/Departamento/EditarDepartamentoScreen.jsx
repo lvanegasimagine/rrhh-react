@@ -10,7 +10,7 @@ import {
 import { Formik } from 'formik';
 import React from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 import {
   getDepartamento,
@@ -137,14 +137,16 @@ const EditarDepartamentoScreen = () => {
                   Actualizar
                 </Button>
               )}
-              <Button
-                leftIcon={<FaArrowLeft />}
-                colorScheme="orange"
-                variant="outline"
-                ml={4}
-              >
-                Atras
-              </Button>
+              <Link to="/listar-departamento">
+                <Button
+                  leftIcon={<FaArrowLeft />}
+                  colorScheme="orange"
+                  variant="outline"
+                  ml={4}
+                >
+                  Atras
+                </Button>
+              </Link>
             </Stack>
           </Box>
         </>
