@@ -13,8 +13,29 @@ import {
 } from '@chakra-ui/react';
 import { FaPlus, FaPen, FaTrash } from 'react-icons/fa';
 import { Link as ReachLink } from 'react-router-dom';
+import { useQueryCargo } from '../../hooks/useMutate';
+import { AlertStyled } from '../../styled/AlertStyled';
+import { SpinnerStyled } from '../../styled/Spinner';
+import DepartamentoItemScreen from '../Departamento/DepartamentoItemScreen';
+import CargoItemScreen from './CargoItemScreen';
+// import DepartamentoItemScreen from './DepartamentoItemScreen';
 
 const ListarCargoScreen = () => {
+  const { data, isError, isLoading } = useQueryCargo();
+  console.log(data);
+  if (isLoading) {
+    return (
+      <>
+        <Text fontSize="6xl">Cargo</Text>
+        <SpinnerStyled />
+      </>
+    );
+  }
+
+  if (isError) {
+    return <AlertStyled error={isError} />;
+  }
+
   return (
     <>
       <Text fontSize="6xl">Cargo</Text>
@@ -29,7 +50,6 @@ const ListarCargoScreen = () => {
         <Table variant="simple">
           <Thead>
             <Tr>
-              <Th>ID</Th>
               <Th>Cargo</Th>
               <Th>Departamento</Th>
               <Th>Descripcion</Th>
@@ -37,33 +57,9 @@ const ListarCargoScreen = () => {
             </Tr>
           </Thead>
           <Tbody>
-            <Tr
-              _hover={{
-                textDecoration: 'none',
-                bg: 'gray.200',
-                cursor: 'pointer',
-              }}
-            >
-              <Td>1</Td>
-              <Td>Título 1</Td>
-              <Td>Título 1</Td>
-              <Td>Título 1</Td>
-              <Td>Título 1</Td>
-              <Td>
-                <Stack direction="row" spacing={2}>
-                  <IconButton
-                    colorScheme="blue"
-                    aria-label="Search database"
-                    icon={<FaPen />}
-                  />
-                  <IconButton
-                    colorScheme="red"
-                    aria-label="Search database"
-                    icon={<FaTrash />}
-                  />
-                </Stack>
-              </Td>
-            </Tr>
+            {data?.map(cargo => (
+              <CargoItemScreen key={cargo._id} {...cargo} />
+            ))}
           </Tbody>
         </Table>
       </TableContainer>

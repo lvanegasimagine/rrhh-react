@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { createCargo, getCargos } from '../api/cargoResponse';
 import { createDepartamento, getDepartamentos } from '../api/departamentoResponse';
 
 export function useMutateDepartamento() {
@@ -16,6 +17,27 @@ export function useMutateDepartamento() {
 
 export function useQueryDepartamento() {
   return useQuery(['departamento'], getDepartamentos, {
+    retry: 2,
+    retryDelay: 1000,
+    cacheTime: 3000,
+  });
+}
+
+export function useMutateCargo() {
+  const queryClient = useQueryClient();
+
+  return useMutation(createCargo, {
+    onsuccess: data => {
+      queryClient.setQueryData(['cargo'], prevCargo =>
+        prevCargo.concat(data)
+      );
+      queryClient.invalidateQueries(['cargo']);
+    },
+  });
+}
+
+export function useQueryCargo() {
+  return useQuery(['cargo'], getCargos, {
     retry: 2,
     retryDelay: 1000,
     cacheTime: 3000,

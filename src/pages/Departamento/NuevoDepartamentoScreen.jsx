@@ -15,7 +15,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import TextField from '../../styled/TextField';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { useMutateDepartamento } from '../../hooks/useMutateDepartamento';
+import { useMutateDepartamento } from '../../hooks/useMutate';
 
 const NuevoDepartamentoScreen = () => {
   let navigate = useNavigate();

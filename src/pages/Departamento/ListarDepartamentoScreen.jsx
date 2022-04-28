@@ -12,7 +12,7 @@ import {
 
 import { FaPlus } from 'react-icons/fa';
 import { Link as ReachLink } from 'react-router-dom';
-import { useQueryDepartamento } from '../../hooks/useMutateDepartamento';
+import { useQueryDepartamento } from '../../hooks/useMutate';
 import { AlertStyled } from '../../styled/AlertStyled';
 import { SpinnerStyled } from '../../styled/Spinner';
 import DepartamentoItemScreen from './DepartamentoItemScreen';
@@ -24,13 +24,13 @@ const ListarDepartamentoScreen = () => {
     return (
       <>
         <Text fontSize="6xl">Departamento</Text>
-        <SpinnerStyled/>
+        <SpinnerStyled />
       </>
     );
   }
 
   if (isError) {
-    return <AlertStyled error={isError}/>;
+    return <AlertStyled error={isError} />;
   }
   return (
     <>

@@ -13,7 +13,8 @@ const DepartamentoItemScreen = ({
   telefono_corporativo,
 }) => {
   const queryClient = useQueryClient();
-  const { mutateAsync, isLoading } = useMutation(deleteDepartamento);
+  const { mutateAsync } = useMutation(deleteDepartamento);
+  
   const remove = async () => {
     await mutateAsync(_id);
     queryClient.invalidateQueries('departamento');
