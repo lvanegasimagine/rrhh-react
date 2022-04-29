@@ -1,4 +1,4 @@
-import { IconButton, Stack, Td, Tr } from '@chakra-ui/react';
+import { Button, IconButton, Stack, Td, Tr } from '@chakra-ui/react';
 import React from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 
@@ -13,9 +13,10 @@ const DepartamentoItemScreen = ({
   telefono_corporativo,
 }) => {
   const queryClient = useQueryClient();
-  const { mutateAsync } = useMutation(deleteDepartamento);
-  
+  const { mutateAsync, isLoading } = useMutation(deleteDepartamento);
+
   const remove = async () => {
+    console.log(_id);
     await mutateAsync(_id);
     queryClient.invalidateQueries('departamento');
   };
@@ -41,13 +42,17 @@ const DepartamentoItemScreen = ({
               icon={<FaPen />}
               to={`/editar-departamento/${_id}`}
             />
-            <IconButton
-              type="button"
-              colorScheme="red"
-              aria-label="Search database"
-              icon={<FaTrash />}
-              onClick={remove}
-            />
+            {isLoading ? (
+              <Button isLoading colorScheme="teal" variant="outline"></Button>
+            ) : (
+              <IconButton
+                type="button"
+                colorScheme="red"
+                aria-label="Search database"
+                icon={<FaTrash />}
+                onClick={remove}
+              />
+            )}
           </Stack>
         </Td>
       </>

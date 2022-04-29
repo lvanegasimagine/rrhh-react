@@ -20,16 +20,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import TextField from '../../styled/TextField';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import SelectField from '../../styled/SelectField';
 import TextAreaField from '../../styled/TextAreaField';
 
 const NuevoCargoScreen = () => {
   let navigate = useNavigate();
-  const { data } = useQuery(['departamento'], getDepartamentos, {
-    retry: 2,
-    retryDelay: 1000,
-    cacheTime: 3000,
-  });
 
   const { data: departamentoList } = useQuery(
     ['departamento'],
@@ -41,7 +35,7 @@ const NuevoCargoScreen = () => {
     }
   );
 
-  const { mutate, isError, error } = useMutateCargo();
+  const { mutate, isError, error, isLoading } = useMutateCargo();
 
   return (
     <Formik
@@ -104,25 +98,13 @@ const NuevoCargoScreen = () => {
                 onBlur={formik.handleBlur}
               >
                 {departamentoList?.map(departamento => (
-                  <option
-                    key={departamento._id}
-                    value={departamento._id}
-                  >
+                  <option key={departamento._id} value={departamento._id}>
                     {departamento.nombre_departamento}
                   </option>
                 ))}
               </Select>
             </FormControl>
 
-            {/* <SelectField
-              top={10}
-              requir={true}
-              name="departamento"
-              label="Departamento a asignar"
-              // placeholder="Digita Telefono de Area"
-              maxW={'70%'}
-              data={data}
-            /> */}
             <TextAreaField
               top={10}
               requir={true}
@@ -133,14 +115,23 @@ const NuevoCargoScreen = () => {
             />
 
             <Stack direction="row" spacing={4} pt="25">
-              <Button
-                type="submit"
-                leftIcon={<FaRegSave />}
-                colorScheme="blue"
-                variant="solid"
-              >
-                Guardar
-              </Button>
+              {isLoading ? (
+                <Button
+                  isLoading
+                  loadingText="Guardando..."
+                  colorScheme="teal"
+                  variant="outline"
+                ></Button>
+              ) : (
+                <Button
+                  type="submit"
+                  leftIcon={<FaRegSave />}
+                  colorScheme="blue"
+                  variant="solid"
+                >
+                  Guardar
+                </Button>
+              )}
               <Link to="/listar-departamento">
                 <Button
                   leftIcon={<FaArrowLeft />}
@@ -159,20 +150,3 @@ const NuevoCargoScreen = () => {
 };
 
 export default NuevoCargoScreen;
-
-{
-  /* <FormControl isRequired paddingTop={'7'}>
-          <FormLabel htmlFor="departamento">Departamento</FormLabel>
-          <Select
-            id="departamento"
-            placeholder="Seleccione Departamento a asignar"
-            maxW={'70%'}
-          >
-            {departamentoList?.map(departamento => (
-              <option key={departamento._id} value={departamento._id}>
-                {departamento.nombre_departamento}
-              </option>
-            ))}
-          </Select>
-        </FormControl> */
-}

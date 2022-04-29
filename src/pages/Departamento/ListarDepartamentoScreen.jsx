@@ -30,7 +30,16 @@ const ListarDepartamentoScreen = () => {
   }
 
   if (isError) {
-    return <AlertStyled error={isError} />;
+    return (
+      <>
+        <AlertStyled error={isError} />
+        <ReachLink to="/nuevo-departamento">
+          <Button leftIcon={<FaPlus />} colorScheme="teal" variant="solid">
+            Agregar Departamento
+          </Button>
+        </ReachLink>
+      </>
+    );
   }
   return (
     <>

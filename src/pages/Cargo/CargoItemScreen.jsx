@@ -3,10 +3,19 @@ import { IconButton, Stack, Td, Tr } from '@chakra-ui/react';
 import { FaPen, FaTrash } from 'react-icons/fa';
 import { deleteDepartamento } from '../../api/departamentoResponse';
 import { Link as ReachLink } from 'react-router-dom';
+import { useMutation, useQueryClient } from 'react-query';
+import { deleteCargo } from '../../api/cargoResponse';
 
 const CargoItemScreen = ({ _id, nombre_cargo, descripcion, departamento }) => {
 
   let resumen_descripcion = descripcion.slice(0, 31) + ' ...';
+  const queryClient = useQueryClient();
+  const { mutateAsync, isLoading } = useMutation(deleteCargo);
+  
+  const remove = async () => {
+    await mutateAsync(_id);
+    queryClient.invalidateQueries('cargo');
+  };
 
   return (
     <Tr
@@ -28,15 +37,19 @@ const CargoItemScreen = ({ _id, nombre_cargo, descripcion, departamento }) => {
               colorScheme="blue"
               aria-label="Search database"
               icon={<FaPen />}
-              to={`/editar-departamento/${_id}`}
+              to={`/editar-cargo/${_id}`}
             />
-            <IconButton
-              type="button"
-              colorScheme="red"
-              aria-label="Search database"
-              icon={<FaTrash />}
-              // onClick={remove}
-            />
+           {isLoading ? (
+              <IconButton isLoading colorScheme="red" variant="outline"></IconButton>
+            ) : (
+              <IconButton
+                type="button"
+                colorScheme="red"
+                aria-label="Search database"
+                icon={<FaTrash />}
+                onClick={remove}
+              />
+            )}
           </Stack>
         </Td>
       </>

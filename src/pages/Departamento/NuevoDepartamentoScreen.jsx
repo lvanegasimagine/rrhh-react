@@ -1,16 +1,6 @@
-import {
-  Container,
-  VStack,
-  Text,
-  Box,
-  FormControl,
-  FormLabel,
-  Input,
-  Stack,
-  Button,
-} from '@chakra-ui/react';
+import { Text, Box, Stack, Button } from '@chakra-ui/react';
 import React from 'react';
-import { FaRegSave, FaArrowLeft } from 'react-icons/fa';
+import { FaRegSave, FaArrowLeft, FaSync } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import TextField from '../../styled/TextField';
 import { Formik } from 'formik';
@@ -20,7 +10,7 @@ import { useMutateDepartamento } from '../../hooks/useMutate';
 const NuevoDepartamentoScreen = () => {
   let navigate = useNavigate();
 
-  const { mutate, isError, error } = useMutateDepartamento();
+  const { mutate, isError, error, isLoading } = useMutateDepartamento();
 
   return (
     <Formik
@@ -50,8 +40,8 @@ const NuevoDepartamentoScreen = () => {
     >
       {formik => (
         <>
-        {isError && <Text>Error al crear el departamento</Text>}
-        {error && <Text>Error al crear el departamento</Text>}
+          {isError && <Text>Error al crear el departamento</Text>}
+          {error && <Text>Error al crear el departamento</Text>}
           <Text fontSize="2xl" paddingTop={'35'} paddingBottom={'2'}>
             Nuevo departamento
           </Text>
@@ -90,14 +80,23 @@ const NuevoDepartamentoScreen = () => {
             />
 
             <Stack direction="row" spacing={4} pt="25">
-              <Button
-                type="submit"
-                leftIcon={<FaRegSave />}
-                colorScheme="blue"
-                variant="solid"
-              >
-                Guardar
-              </Button>
+              {isLoading ? (
+                <Button
+                  isLoading
+                  loadingText="Guardando..."
+                  colorScheme="teal"
+                  variant="outline"
+                ></Button>
+              ) : (
+                <Button
+                  type="submit"
+                  leftIcon={<FaRegSave />}
+                  colorScheme="blue"
+                  variant="solid"
+                >
+                  Guardar
+                </Button>
+              )}
               <Link to="/listar-departamento">
                 <Button
                   leftIcon={<FaArrowLeft />}
