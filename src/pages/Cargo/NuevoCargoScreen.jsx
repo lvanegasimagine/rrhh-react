@@ -20,9 +20,17 @@ import { Link, useNavigate } from 'react-router-dom';
 import TextField from '../../styled/TextField';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import SelectField from '../../styled/SelectField';
+import TextAreaField from '../../styled/TextAreaField';
 
 const NuevoCargoScreen = () => {
   let navigate = useNavigate();
+  const { data } = useQuery(['departamento'], getDepartamentos, {
+    retry: 2,
+    retryDelay: 1000,
+    cacheTime: 3000,
+  });
+
   const { data: departamentoList } = useQuery(
     ['departamento'],
     getDepartamentos,
@@ -32,9 +40,9 @@ const NuevoCargoScreen = () => {
       cacheTime: 3000,
     }
   );
+
   const { mutate, isError, error } = useMutateCargo();
 
-  console.log('departamento', departamentoList);
   return (
     <Formik
       initialValues={{
@@ -50,6 +58,7 @@ const NuevoCargoScreen = () => {
           .max(250, 'Maximo 250 Caracteres'),
       })}
       onSubmit={(values, actions) => {
+        console.log(values);
         mutate(values, {
           onSuccess: () => {
             actions.resetForm();
@@ -84,29 +93,45 @@ const NuevoCargoScreen = () => {
               maxW={'70%'}
             />
 
-            <TextField
-              top={10}
-              requir={true}
-              name="telefono_corporativo"
-              label="Telefono de Area"
-              placeholder="Digita Telefono de Area"
-              maxW={'70%'}
-            />
             <FormControl isRequired paddingTop={'7'}>
               <FormLabel htmlFor="departamento">Departamento</FormLabel>
               <Select
-                id="departamento"
-                name='departamento'
+                name="departamento"
                 placeholder="Seleccione Departamento a asignar"
                 maxW={'70%'}
+                value={formik.values.departamento}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               >
                 {departamentoList?.map(departamento => (
-                  <option key={departamento._id} value={departamento._id}>
+                  <option
+                    key={departamento._id}
+                    value={departamento._id}
+                  >
                     {departamento.nombre_departamento}
                   </option>
                 ))}
               </Select>
             </FormControl>
+
+            {/* <SelectField
+              top={10}
+              requir={true}
+              name="departamento"
+              label="Departamento a asignar"
+              // placeholder="Digita Telefono de Area"
+              maxW={'70%'}
+              data={data}
+            /> */}
+            <TextAreaField
+              top={10}
+              requir={true}
+              name="descripcion"
+              label="Descripcion"
+              placeholder="Digita Descripcion"
+              maxW={'70%'}
+            />
+
             <Stack direction="row" spacing={4} pt="25">
               <Button
                 type="submit"

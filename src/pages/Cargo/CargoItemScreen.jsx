@@ -1,12 +1,13 @@
-import React from 'react'
+import React from 'react';
 import { IconButton, Stack, Td, Tr } from '@chakra-ui/react';
 import { FaPen, FaTrash } from 'react-icons/fa';
 import { deleteDepartamento } from '../../api/departamentoResponse';
 import { Link as ReachLink } from 'react-router-dom';
-const CargoItemScreen = ({_id,
-  nombre_cargo,
-  descripcion,
-  departamento,}) => {
+
+const CargoItemScreen = ({ _id, nombre_cargo, descripcion, departamento }) => {
+
+  let resumen_descripcion = descripcion.slice(0, 31) + ' ...';
+
   return (
     <Tr
       _hover={{
@@ -18,7 +19,7 @@ const CargoItemScreen = ({_id,
       <>
         <Td>{nombre_cargo}</Td>
         <Td>{departamento?.nombre_departamento}</Td>
-        <Td> {descripcion.slice(0, 31) + ' ...'}</Td>
+        <Td>{resumen_descripcion}</Td>
         <Td>
           <Stack direction="row" spacing={2}>
             <IconButton
@@ -40,7 +41,7 @@ const CargoItemScreen = ({_id,
         </Td>
       </>
     </Tr>
-  )
-}
+  );
+};
 
-export default CargoItemScreen
+export default CargoItemScreen;
