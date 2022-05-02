@@ -6,11 +6,14 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import StatsCard from '../../styled/StatsCard';
 
 const DashboardScreen = () => {
+  const { user } = useAuthContext();
   return (
     <>
       <Grid templateColumns="repeat(5, 1fr)" gap={4} m={35}>
         <GridItem colSpan={6} h="10">
-        <Text>Para algo servira esto</Text>
+          <Text fontSize='2xl'>
+            Bienvenido <strong>{user.displayName}</strong>{' '}
+          </Text>
         </GridItem>
       </Grid>
       <Box

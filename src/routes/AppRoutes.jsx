@@ -20,9 +20,9 @@ const AppRoutes = () => {
             <Routes>
               <Route
                 path="login"
-                element={user ? <DashboardScreen /> : <LoginScreen />}
+                element={user ? <Navigate to="/" replace /> : <LoginScreen />}
               />
-              <Route path="signup" element={<RegistroScreen />} />
+              <Route path="signup" element={user ? <Navigate to="/" replace /> : <RegistroScreen />} />
               <Route
                 path="/"
                 element={user ? <DashboardScreen /> : <Navigate to="/login" replace />}

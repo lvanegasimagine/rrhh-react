@@ -115,7 +115,6 @@ const MenuLinks = ({ isOpen }) => {
         ) : (
           <>
             <ButtonModeDark />
-
             <Link to="login" {...linkProps}>
               <Text>Login</Text>
             </Link>
