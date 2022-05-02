@@ -3,13 +3,16 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLogin } from '../../hooks/useLogin';
 import { BsBoxArrowInRight } from 'react-icons/bs';
-import { Formik } from 'formik';
+import { Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import TextField from '../../styled/TextField';
 
 const LoginScreen = () => {
   let navigate = useNavigate();
+  
   const { login, error, isPending } = useLogin();
+
+  console.log('aca',error);
 
   return (
     <Formik
@@ -64,7 +67,6 @@ const LoginScreen = () => {
               Loading...
             </Button>
           )}
-          {error && <Text className="error">{error}</Text>}
         </VStack>
       )}
     </Formik>

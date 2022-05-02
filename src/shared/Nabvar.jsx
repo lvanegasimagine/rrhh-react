@@ -1,25 +1,68 @@
+import { useState } from 'react';
+
 import {
   Box,
+  Button,
   Flex,
-  HStack,
-  IconButton,
   Link,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
+  Stack,
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
 
-import { FaUserAlt } from 'react-icons/fa';
+import { FaShareSquare } from 'react-icons/fa';
 import { Link as ReachLink } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useLogout } from '../hooks/useLogout';
 import ButtonModeDark from '../styled/ButtonModeDark';
-const Navbar = () => {
+
+const CloseIcon = () => (
+  <svg width="24" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+    <title>Close</title>
+    <path
+      fill="white"
+      d="M9.00023 7.58599L13.9502 2.63599L15.3642 4.04999L10.4142 8.99999L15.3642 13.95L13.9502 15.364L9.00023 10.414L4.05023 15.364L2.63623 13.95L7.58623 8.99999L2.63623 4.04999L4.05023 2.63599L9.00023 7.58599Z"
+    />
+  </svg>
+);
+
+const MenuIcon = () => (
+  <svg
+    width="24px"
+    viewBox="0 0 20 20"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="white"
+  >
+    <title>Menu</title>
+    <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+  </svg>
+);
+
+const MenuToggle = ({ toggle, isOpen }) => {
+  return (
+    <Box display={{ base: 'block', md: 'none' }} onClick={toggle}>
+      {isOpen ? <CloseIcon /> : <MenuIcon />}
+    </Box>
+  );
+};
+
+const Navbar = props => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => setIsOpen(!isOpen);
+
+  return (
+    <NavBarContainer {...props}>
+      <MenuToggle toggle={toggle} isOpen={isOpen} />
+      <MenuLinks isOpen={isOpen} />
+    </NavBarContainer>
+  );
+};
+
+const MenuLinks = ({ isOpen }) => {
   const { user } = useAuthContext();
   const { logout } = useLogout();
+
   const linkProps = {
     as: ReachLink,
     px: 2,
@@ -32,60 +75,75 @@ const Navbar = () => {
   };
 
   return (
-    <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
-      <Flex h={16} alignItems="center" justifyContent="space-between">
-        <HStack as="nav" spacing={4} display={{ base: 'none', md: 'flex' }}>
-          {user && (
-            <>
-              <Link colorScheme="teal" variant="solid" to="/" {...linkProps}>
-                <Text fontSize="xl">ReactPro RRHH</Text>
-              </Link>
-              <Link to="listar-empleado" {...linkProps}>
-                <Text>Empleado</Text>
-              </Link>
-              <Link to="listar-cargo" {...linkProps}>
-                <Text>Cargo</Text>
-              </Link>
-              <Link to="listar-departamento" {...linkProps}>
-                <Text>Departamento</Text>
-              </Link>
-            </>
-          )}
-        </HStack>
-        <Flex alignItems="center">
-          <Menu>
-            {!user && (
-              <>
-                <Link to="login" {...linkProps}>
-                  <Text>Login</Text>
-                </Link>
-                <Link to="signup" {...linkProps}>
-                  <Text>Signup</Text>
-                </Link>
-              </>
-            )}
-            {user && (
-              <>
-                <strong>
-                  <Text>Bienvenido {user.displayName} &nbsp;</Text>
-                </strong>
-                <MenuButton
-                  as={IconButton}
-                  aria-label="Options"
-                  icon={<FaUserAlt />}
-                  variant="outline"
-                />
-                <MenuList>
-                  <MenuItem>Editar Usuario</MenuItem>
-                  <MenuItem onClick={logout}>Logout</MenuItem>
-                </MenuList>
-              </>
-            )}
+    <Box
+      display={{ base: isOpen ? 'block' : 'none', md: 'block' }}
+      flexBasis={{ base: '100%', md: 'auto' }}
+    >
+      <Stack
+        spacing={8}
+        align="center"
+        justify={['center', 'space-between', 'flex-end', 'flex-end']}
+        direction={['column', 'row', 'row', 'row']}
+        pt={[4, 4, 0, 0]}
+      >
+        {user ? (
+          <>
+            <Link colorScheme="teal" variant="solid" to="/" {...linkProps}>
+              <Text fontSize="xl">ReactPro RRHH</Text>
+            </Link>
+            <Link to="listar-empleado" {...linkProps}>
+              <Text>Empleado</Text>
+            </Link>
+            <Link to="listar-cargo" {...linkProps}>
+              <Text>Cargo</Text>
+            </Link>
+            <Link to="listar-departamento" {...linkProps}>
+              <Text>Departamento</Text>
+            </Link>
+            <Link to="listar-departamento" {...linkProps}>
+              <Text>Editar Usuario</Text>
+            </Link>
+            <Button
+              leftIcon={<FaShareSquare />}
+              variant="solid"
+              onClick={logout}
+            >
+              Logout
+            </Button>
             <ButtonModeDark />
-          </Menu>
-        </Flex>
-      </Flex>
+          </>
+        ) : (
+          <>
+            <ButtonModeDark />
+
+            <Link to="login" {...linkProps}>
+              <Text>Login</Text>
+            </Link>
+            <Link to="signup" {...linkProps}>
+              <Text>Signup</Text>
+            </Link>
+          </>
+        )}
+      </Stack>
     </Box>
+  );
+};
+
+const NavBarContainer = ({ children, ...props }) => {
+  return (
+    <Flex
+      as="nav"
+      align="center"
+      justify="space-between"
+      wrap="wrap"
+      w="100%"
+      mb={8}
+      p={5}
+      bg={useColorModeValue('gray.100', 'gray.900')}
+      {...props}
+    >
+      {children}
+    </Flex>
   );
 };
 

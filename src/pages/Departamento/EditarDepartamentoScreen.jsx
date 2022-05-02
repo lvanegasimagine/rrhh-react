@@ -23,12 +23,12 @@ const EditarDepartamentoScreen = () => {
   const { id } = useParams();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+
   const { data, isLoading, isError, error } = useQuery(
     ['departamento', { id }],
     getDepartamento
   );
-  const { mutateAsync, isLoading: isMutating } =
-    useMutation(updateDepartamento);
+  const { mutateAsync, isLoading: isMutating } = useMutation(updateDepartamento);
 
   if (isLoading) {
     return (

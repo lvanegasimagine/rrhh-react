@@ -1,5 +1,5 @@
 import { Container } from '@chakra-ui/react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { ListaEmpleadoScreen, NuevoEmpleadoScreen, EditarEmpleadoScreen  } from '../pages/Empleado';
 import { ListarDepartamentoScreen, NuevoDepartamentoScreen, EditarDepartamentoScreen } from '../pages/Departamento';
@@ -25,47 +25,47 @@ const AppRoutes = () => {
               <Route path="signup" element={<RegistroScreen />} />
               <Route
                 path="/"
-                element={user ? <DashboardScreen /> : <LoginScreen />}
+                element={user ? <DashboardScreen /> : <Navigate to="/login" replace />}
               />
               <Route
                 path="nuevo-empleado"
-                element={user ? <NuevoEmpleadoScreen /> : <LoginScreen />}
+                element={user ? <NuevoEmpleadoScreen /> : <Navigate to="/login" replace />}
               />
               <Route
                 path="editar-empleado/:id"
-                element={user ? <EditarEmpleadoScreen /> : <LoginScreen />}
+                element={user ? <EditarEmpleadoScreen /> : <Navigate to="/login" replace />}
               />
               <Route
                 path="listar-empleado"
-                element={user ? <ListaEmpleadoScreen /> : <LoginScreen />}
+                element={user ? <ListaEmpleadoScreen /> : <Navigate to="/login" replace />}
               />
               <Route
                 path="nuevo-departamento"
-                element={user ? <NuevoDepartamentoScreen /> : <LoginScreen />}
+                element={user ? <NuevoDepartamentoScreen /> : <Navigate to="/login" replace />}
               />
               <Route
                 path="editar-departamento/:id"
-                element={user ? <EditarDepartamentoScreen /> : <LoginScreen />}
+                element={user ? <EditarDepartamentoScreen /> : <Navigate to="/login" replace />}
               />
               <Route
                 path="listar-departamento"
-                element={user ? <ListarDepartamentoScreen /> : <LoginScreen />}
+                element={user ? <ListarDepartamentoScreen /> : <Navigate to="/login" replace />}
               />
               <Route
                 path="nuevo-cargo"
-                element={user ? <NuevoCargoScreen /> : <LoginScreen />}
+                element={user ? <NuevoCargoScreen /> : <Navigate to="/login" replace />}
               />
               <Route
                 path="editar-cargo/:id"
-                element={user ? <EditarCargoScreen /> : <LoginScreen />}
+                element={user ? <EditarCargoScreen /> : <Navigate to="/login" replace />}
               />
               <Route
                 path="listar-cargo"
-                element={user ? <ListarCargoScreen /> : <LoginScreen />}
+                element={user ? <ListarCargoScreen /> : <Navigate to="/login" replace />}
               />
               <Route
                 path="*"
-                element={user ? <NotFoundScreen /> : <LoginScreen />}
+                element={user ? <NotFoundScreen /> : <Navigate to="/login" replace />}
               />
             </Routes>
           </Container>
