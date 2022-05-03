@@ -14,13 +14,11 @@ import { Link as ReachLink } from 'react-router-dom';
 import { useQueryCargo } from '../../hooks/useMutate';
 import { AlertStyled } from '../../styled/AlertStyled';
 import { SpinnerStyled } from '../../styled/Spinner';
-// import DepartamentoItemScreen from '../Departamento/DepartamentoItemScreen';
 import CargoItemScreen from './CargoItemScreen';
-// import DepartamentoItemScreen from './DepartamentoItemScreen';
 
 const ListarCargoScreen = () => {
   const { data, isError, isLoading } = useQueryCargo();
-  console.log(data);
+
   if (isLoading) {
     return (
       <>

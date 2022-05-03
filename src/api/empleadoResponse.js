@@ -35,7 +35,7 @@ export const updateEmpleado = async ({id, ...updateEmpleado}) => {
         const { data } = await axios.put(`${API}/empleado/${id}`, updateEmpleado);
         return data;
     } catch (error) {
-        console.log(error);        
+        console.log(error);
     }
 }
 

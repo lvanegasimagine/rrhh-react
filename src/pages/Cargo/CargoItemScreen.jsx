@@ -1,7 +1,6 @@
 import React from 'react';
 import { IconButton, Stack, Td, Tr } from '@chakra-ui/react';
 import { FaPen, FaTrash } from 'react-icons/fa';
-import { deleteDepartamento } from '../../api/departamentoResponse';
 import { Link as ReachLink } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 import { deleteCargo } from '../../api/cargoResponse';
@@ -25,7 +24,6 @@ const CargoItemScreen = ({ _id, nombre_cargo, descripcion, departamento }) => {
         cursor: 'pointer',
       }}
     >
-      <>
         <Td>{nombre_cargo}</Td>
         <Td>{departamento?.nombre_departamento}</Td>
         <Td>{resumen_descripcion}</Td>
@@ -52,7 +50,6 @@ const CargoItemScreen = ({ _id, nombre_cargo, descripcion, departamento }) => {
             )}
           </Stack>
         </Td>
-      </>
     </Tr>
   );
 };
