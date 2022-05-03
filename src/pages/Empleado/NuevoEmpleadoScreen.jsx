@@ -22,6 +22,7 @@ import { useQuery } from 'react-query';
 import { getCargos } from '../../api/cargoResponse';
 import { useMutateEmpleado } from '../../hooks/useMutate';
 import TextField from '../../styled/TextField';
+import TextAreaField from '../../styled/TextAreaField';
 
 export default function NuevoEmpleadoScreen() {
   let navigate = useNavigate();
@@ -125,7 +126,13 @@ export default function NuevoEmpleadoScreen() {
                     />
                   </GridItem>
                   <GridItem colSpan={3}>
-                    <TextField
+                    {/* <TextField
+                      requir={true}
+                      name="direccion"
+                      label="Direccion"
+                      placeholder="Digita direccion"
+                    /> */}
+                    <TextAreaField
                       requir={true}
                       name="direccion"
                       label="Direccion"
@@ -163,7 +170,7 @@ export default function NuevoEmpleadoScreen() {
                     </FormControl>
                   </GridItem>
                   <GridItem colSpan={1}>
-                  <FormControl>
+                    <FormControl>
                       <FormLabel>Estado Civil</FormLabel>
                       <Select
                         name="estado_civil"
@@ -200,9 +207,7 @@ export default function NuevoEmpleadoScreen() {
                 <SimpleGrid columns={2} columnGap={3} rowGap={6} w="full">
                   <GridItem colSpan={1}>
                     <FormControl isRequired>
-                      <FormLabel htmlFor="cargo">
-                        Cargo a Asignar
-                      </FormLabel>
+                      <FormLabel htmlFor="cargo">Cargo a Asignar</FormLabel>
                       <Select
                         name="cargo"
                         value={formik.values.cargo}
@@ -218,8 +223,10 @@ export default function NuevoEmpleadoScreen() {
                     </FormControl>
                   </GridItem>
                   <GridItem colSpan={1}>
-                    <FormControl isRequired >
-                      <FormLabel htmlFor="departamento">Departamento a Asignar</FormLabel>
+                    <FormControl isRequired>
+                      <FormLabel htmlFor="departamento">
+                        Departamento a Asignar
+                      </FormLabel>
                       <Select
                         name="departamento"
                         value={formik.values.departamento}
@@ -251,7 +258,7 @@ export default function NuevoEmpleadoScreen() {
                   <GridItem colSpan={1} pt="2">
                     <Button size="lg" w="full" colorScheme="red">
                       {' '}
-                      <FcCancel /> &nbsp; Cancelar
+                      <FcCancel /> &nbsp; Atras
                     </Button>
                   </GridItem>
                 </SimpleGrid>
@@ -263,18 +270,3 @@ export default function NuevoEmpleadoScreen() {
     </Formik>
   );
 }
-
-// {
-//   "nombre": "Luis Valentin",
-//   "apellido": "Vanegas Morales",
-//   "sexo": "Masculino",
-//   "direccion": "Camilo Chamorro",
-//   "fecha_nacimiento": "2022-05-04",
-//   "cedula": "002-203265-0100E",
-//   "ciudad_nacimiento": "Managua, Nicaragua",
-//   "telefono": "1234-5678",
-//   "estado_civil": "Soltero",
-//   "correo_electronico": "admin2@admin.com",
-//   "departamento": "626c17b7baba1c3a2435105a",
-//   "cargo": "626c1cfc63931e3fb05a1f7e"
-// }

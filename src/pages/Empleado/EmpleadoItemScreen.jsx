@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconButton, Stack, Td, Tr } from '@chakra-ui/react';
-import { FaPen, FaTrash } from 'react-icons/fa';
+import { FaPen, FaTrash, FaEye } from 'react-icons/fa';
 import { useMutation, useQueryClient } from 'react-query';
 import { deleteEmpleado } from '../../api/empleadoResponse';
 import { Link as ReachLink } from 'react-router-dom';
@@ -41,11 +41,20 @@ const EmpleadoItemScreen = ({
           <IconButton
             as={ReachLink}
             type="button"
+            colorScheme="green"
+            aria-label="Search database"
+            icon={<FaEye />}
+            to={`/`}
+          />
+          <IconButton
+            as={ReachLink}
+            type="button"
             colorScheme="blue"
             aria-label="Search database"
             icon={<FaPen />}
             to={`/editar-empleado/${_id}`}
           />
+
           {isLoading ? (
             <IconButton
               isLoading
