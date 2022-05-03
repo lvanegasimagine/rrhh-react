@@ -144,6 +144,7 @@ export default function NuevoEmpleadoScreen() {
             </GridItem>
           </SimpleGrid>
         </VStack>
+        
       </Flex>
     </Container>
   );
