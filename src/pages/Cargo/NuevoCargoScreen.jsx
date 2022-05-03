@@ -1,15 +1,11 @@
 import {
-  Container,
-  VStack,
   Text,
   Box,
   FormControl,
   FormLabel,
-  Input,
   Stack,
   Button,
   Select,
-  Textarea,
 } from '@chakra-ui/react';
 import React from 'react';
 import { FaRegSave, FaArrowLeft } from 'react-icons/fa';

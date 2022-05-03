@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { createCargo, getCargos } from '../api/cargoResponse';
 import { createDepartamento, getDepartamentos } from '../api/departamentoResponse';
-import { getEmpleados } from '../api/empleadoResponse';
+import { createEmpleado, getEmpleados } from '../api/empleadoResponse';
 
 export function useMutateDepartamento() {
   const queryClient = useQueryClient();
@@ -51,4 +51,17 @@ export function useQueryEmpleado() {
     retryDelay: 1000,
     cacheTime: 3000,
   })
+}
+
+export function useMutateEmpleado() {
+  const queryClient = useQueryClient();
+
+  return useMutation(createEmpleado, {
+    onsuccess: data => {
+      queryClient.setQueryData(['empleado'], prevEmpleado =>
+        prevEmpleado.concat(data)
+      );
+      queryClient.invalidateQueries(['empleado']);
+    },
+  });
 }
