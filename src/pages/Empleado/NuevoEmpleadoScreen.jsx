@@ -20,14 +20,14 @@ export default function NuevoEmpleadoScreen() {
     <Container maxW="container.xl" p={0}>
       <Flex
         h={{ base: 'auto', md: '100vh' }}
-        py={[0, 10, 20]}
+        py={[0, 5, 10]}
         direction={{ base: 'column-reverse', md: 'row' }}
       >
         <VStack
           w={'full'}
-          h="full"
-          p={10}
-          spacing={10}
+          h={'full'}
+          p={2}
+          spacing={8}
           alignItems="flex-start"
           // bg="blue.300"
         >
