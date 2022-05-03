@@ -13,12 +13,16 @@ import {
 } from '@chakra-ui/react';
 import { FaPlus, FaPen, FaTrash } from 'react-icons/fa';
 import { Link as ReachLink } from 'react-router-dom';
+import { useQueryEmpleado } from '../../hooks/useMutate';
 
 const ListaEmpleadoScreen = () => {
+
+  const { data, isError, isLoading } = useQueryEmpleado();
+  console.log(data);
+  
   return (
     <>
       <Text fontSize="6xl">Empleado</Text>
-
       <Stack direction="row" spacing={4} pt="15" pb="15">
         <ReachLink to="/nuevo-empleado">
           <Button leftIcon={<FaPlus />} colorScheme="teal" variant="solid">

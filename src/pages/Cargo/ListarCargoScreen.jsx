@@ -2,21 +2,19 @@ import {
   Table,
   TableContainer,
   Tbody,
-  Td,
   Text,
   Th,
   Thead,
   Tr,
   Stack,
-  IconButton,
   Button,
 } from '@chakra-ui/react';
-import { FaPlus, FaPen, FaTrash } from 'react-icons/fa';
+import { FaPlus } from 'react-icons/fa';
 import { Link as ReachLink } from 'react-router-dom';
 import { useQueryCargo } from '../../hooks/useMutate';
 import { AlertStyled } from '../../styled/AlertStyled';
 import { SpinnerStyled } from '../../styled/Spinner';
-import DepartamentoItemScreen from '../Departamento/DepartamentoItemScreen';
+// import DepartamentoItemScreen from '../Departamento/DepartamentoItemScreen';
 import CargoItemScreen from './CargoItemScreen';
 // import DepartamentoItemScreen from './DepartamentoItemScreen';
 

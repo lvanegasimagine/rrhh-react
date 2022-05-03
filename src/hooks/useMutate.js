@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { createCargo, getCargos } from '../api/cargoResponse';
 import { createDepartamento, getDepartamentos } from '../api/departamentoResponse';
+import { getEmpleados } from '../api/empleadoResponse';
 
 export function useMutateDepartamento() {
   const queryClient = useQueryClient();
@@ -42,4 +43,12 @@ export function useQueryCargo() {
     retryDelay: 1000,
     cacheTime: 3000,
   });
+}
+
+export function useQueryEmpleado() {
+  return useQuery(['empleado'], getEmpleados, {
+    retry: 2,
+    retryDelay: 1000,
+    cacheTime: 3000,
+  })
 }

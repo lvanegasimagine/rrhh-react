@@ -9,30 +9,36 @@ import { Field, useField } from 'formik';
 import { useQuery } from 'react-query';
 import { getDepartamentos } from '../api/departamentoResponse';
 
-const SelectField = ({ label, requir, top, data, ...props }) => {
-  
-  const [field, meta] = useField(props);
+const SelectField = ({ label, requir, place, top, data, departamento, handleChange, handleBlur }) => {
+  // const { data: departamentoList } = useQuery(
+  //   ['departamento'],
+  //   getDepartamentos,
+  //   {
+  //     retry: 2,
+  //     retryDelay: 1000,
+  //     cacheTime: 3000,
+  //   }
+  // );
+
   return (
     <>
-      <FormControl
-        isInvalid={meta.error && meta.touched}
-        isRequired={requir}
-        paddingTop={top}
-      >
-        <FormLabel>{label}</FormLabel>
+      <FormControl isRequired={requir} paddingTop={'7'}>
+        <FormLabel htmlFor={label}>{label}</FormLabel>
         <Select
-          id="departamento"
-          name="departamento"
-          placeholder="Seleccione Departamento a asignar"
-          maxW={'70%'}
+          name={label}
+          placeholder={place}
+          maxW={top}
+          value={departamento}
+          onChange={handleChange}
+          onBlur={handleBlur}
         >
           {data?.map(departamento => (
-            <option key={departamento._id} value={departamento.nombre_departamento}>
+            <option key={departamento._id} value={departamento._id}>
               {departamento.nombre_departamento}
             </option>
           ))}
         </Select>
-        <FormErrorMessage>{meta.error}</FormErrorMessage>
+        {/* <FormErrorMessage>{meta.error}</FormErrorMessage> */}
       </FormControl>
     </>
   );
