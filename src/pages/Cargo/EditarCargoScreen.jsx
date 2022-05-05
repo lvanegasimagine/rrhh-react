@@ -31,8 +31,6 @@ const EditarCargoScreen = () => {
     getCargo
   );
 
-  console.log('cargo', data);
-
   const { data: departamentoList } = useQuery(
     ['departamento'],
     getDepartamentos,
@@ -65,23 +63,33 @@ const EditarCargoScreen = () => {
     );
   }
 
-  return (
-    <Formik
-      initialValues={{
-        nombre_cargo: data?.nombre_cargo,
-        departamento: data?.departamento.id,
-        descripcion: data?.descripcion,
-      }}
-      validationSchema={Yup.object({
-        nombre_cargo: Yup.string().required('Nombre Cargo Obligatorio'),
-        departamento: Yup.string().required('Departamento Obligatorio'),
-        descripcion: Yup.string()
-          .required('Descripcion Obligatorio')
-          .max(250, 'Maximo 250 Caracteres'),
-      })}
-      onSubmit={(values, actions) => {
-        console.log(values);
-        mutateAsync(
+  const { _id, nombre_departamento } = data.departamento;
+
+  const drop = departamentoList.map((departamento) => ({
+    key: departamento.nombre_departamento,
+    value: departamento._id,
+  }));
+
+  console.log(_id, nombre_departamento, drop)
+
+  
+
+  const initialValues = {
+    nombre_cargo: data?.nombre_cargo,
+    descripcion: data?.descripcion,
+    departamento: data?.departamento._id,
+  };
+
+  const validationSchema = Yup.object({
+    nombre_cargo: Yup.string().required('Nombre Cargo Obligatorio'),
+    departamento: Yup.string().required('Departamento Obligatorio'),
+    descripcion: Yup.string()
+      .required('Descripcion Obligatorio')
+      .max(250, 'Maximo 250 Caracteres'),
+  });
+
+  const onSubmit = (values, actions) => {
+    mutateAsync(
           { ...values, id },
           {
             onSuccess: () => {
@@ -92,7 +100,13 @@ const EditarCargoScreen = () => {
             },
           }
         );
-      }}
+  };
+
+  return (
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
     >
       {formik => (
         <>
@@ -119,13 +133,13 @@ const EditarCargoScreen = () => {
               maxW={'70%'}
             />
 
-            <FormControl isRequired paddingTop={'7'}>
+            {/* <FormControl isRequired paddingTop={'7'}>
               <FormLabel htmlFor="departamento">Departamento</FormLabel>
               <Select
                 name="departamento"
-                placeholder="Seleccione Departamento a asignar"
+                // placeholder="Seleccione Departamento a asignar"
                 maxW={'70%'}
-                value={formik.values.departamento}
+                // value={formik.values.departamento}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               >
@@ -135,7 +149,7 @@ const EditarCargoScreen = () => {
                   </option>
                 ))}
               </Select>
-            </FormControl>
+            </FormControl> */}
 
             <TextAreaField
               top={10}

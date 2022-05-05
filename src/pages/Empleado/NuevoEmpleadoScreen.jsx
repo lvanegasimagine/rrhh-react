@@ -126,12 +126,6 @@ export default function NuevoEmpleadoScreen() {
                     />
                   </GridItem>
                   <GridItem colSpan={3}>
-                    {/* <TextField
-                      requir={true}
-                      name="direccion"
-                      label="Direccion"
-                      placeholder="Digita direccion"
-                    /> */}
                     <TextAreaField
                       requir={true}
                       name="direccion"

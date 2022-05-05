@@ -1,47 +1,61 @@
-import {
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input,
-  Select,
-} from '@chakra-ui/react';
-import { Field, useField } from 'formik';
-import { useQuery } from 'react-query';
-import { getDepartamentos } from '../api/departamentoResponse';
+import React from 'react';
+import { Field, Form, Formik, FormikProps } from 'formik';
 
-const SelectField = ({ label, requir, place, top, data, departamento, handleChange, handleBlur }) => {
-  // const { data: departamentoList } = useQuery(
-  //   ['departamento'],
-  //   getDepartamentos,
-  //   {
-  //     retry: 2,
-  //     retryDelay: 1000,
-  //     cacheTime: 3000,
-  //   }
-  // );
-
-  return (
-    <>
-      <FormControl isRequired={requir} paddingTop={'7'}>
-        <FormLabel htmlFor={label}>{label}</FormLabel>
-        <Select
-          name={label}
-          placeholder={place}
-          maxW={top}
-          value={departamento}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        >
-          {data?.map(departamento => (
-            <option key={departamento._id} value={departamento._id}>
-              {departamento.nombre_departamento}
-            </option>
-          ))}
-        </Select>
-        {/* <FormErrorMessage>{meta.error}</FormErrorMessage> */}
-      </FormControl>
-    </>
-  );
+const MyInput = ({ field, form, ...props }) => {
+  return <input {...field} {...props} />;
 };
 
-export default SelectField;
+const cargo = [
+ {
+   departamento: {
+      id: 1,
+      nombre: 'Departamento 1'
+   }
+ }
+]
+let {id, nombre} = cargo[0].departamento;
+
+export const SelectField = () => (
+  
+  <div>
+    <h1>My Form</h1>
+    <Formik
+      initialValues={{ email: '', color: '', firstName: '', lastName: '' }}
+      onSubmit={(values, actions) => {
+        setTimeout(() => {
+          alert(JSON.stringify(values, null, 2));
+          actions.setSubmitting(false);
+        }, 1000);
+      }}
+    >
+      {(props) => (
+        <Form>
+          <Field type="email" name="email" placeholder="Email" />
+          <Field as="select" name="color">
+            <option value={id}>{nombre}</option>
+            <option value="red">Red</option>
+            <option value="green">Green</option>
+            <option value="blue">Blue</option>
+          </Field>
+
+          <Field name="lastName">
+            {({
+              field, // { name, value, onChange, onBlur }
+              form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+              meta,
+            }) => (
+              <div>
+                <input type="text" placeholder="Email" {...field} />
+                {meta.touched && meta.error && (
+                  <div className="error">{meta.error}</div>
+                )}
+              </div>
+            )}
+          </Field>
+          <Field name="lastName" placeholder="Doe" component={MyInput} />
+          <button type="submit">Submit</button>
+        </Form>
+      )}
+    </Formik>
+  </div>
+);

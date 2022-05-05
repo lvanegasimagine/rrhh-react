@@ -1,8 +1,9 @@
 import React from 'react'
+import { SelectField } from './SelectField'
 
 const Prueba = () => {
   return (
-    <div>Prueba</div>
+    <SelectField/>
   )
 }
 
