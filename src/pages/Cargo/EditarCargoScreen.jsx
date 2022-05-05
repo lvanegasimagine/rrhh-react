@@ -20,9 +20,9 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getCargo, updateCargo } from '../../api/cargoResponse';
 import { Form, Formik } from 'formik';
-import FormikControl from '../../utils/Form/FormikControl';
 import { AlertStyled } from '../../styled/AlertStyled';
 import { useState } from 'react';
+import FormikControl from '../../utils/FormikControl';
 
 const EditarCargoScreen = () => {
   const { id } = useParams();
@@ -113,7 +113,6 @@ const EditarCargoScreen = () => {
             paddingTop={'35'}
             w="100%"
             p={4}
-            onSubmit={formik.handleSubmit}
             autoComplete="off"
           >
             <Text fontSize="2xl" paddingTop={'35'} paddingBottom={'2'}>

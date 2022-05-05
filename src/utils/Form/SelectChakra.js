@@ -1,6 +1,5 @@
 import React from 'react';
 import { Field, ErrorMessage } from 'formik';
-import TextError from './TextError';
 import { FormControl, FormLabel, FormErrorMessage, Select } from '@chakra-ui/react';
 
 function SelectChakra(props) {
@@ -20,7 +19,7 @@ function SelectChakra(props) {
           );
         })}
       </Select>
-      <FormErrorMessage>{TextError}</FormErrorMessage>
+      <FormErrorMessage>Selecciona una Opcion</FormErrorMessage>
     </FormControl>
   );
 }
