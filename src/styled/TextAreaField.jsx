@@ -2,18 +2,22 @@ import {
     FormControl,
     FormErrorMessage,
     FormLabel,
-    Textarea
+    Textarea,
   } from "@chakra-ui/react";
-  import { Field, useField } from "formik";
+  import { Field } from "formik";
 
-  const TextAreaField = ({ label, requir, top, ...props }) => {
-    const [field, meta] = useField(props);
+  const TextAreaField = (props) => {
+    const { label, name, top, requir, ...rest } = props
     return (
-      <FormControl isInvalid={meta.error && meta.touched} isRequired={requir} paddingTop={top}>
-        <FormLabel>{label}</FormLabel>
-        <Textarea as={Textarea} {...field} {...props} />
-        <FormErrorMessage>{meta.error}</FormErrorMessage>
-      </FormControl>
+      <Field name={name}>
+      {({ field, form }) => (
+        <FormControl isInvalid={form.errors[name] && form.touched[name]} isRequired={requir} pt={10}>
+          <FormLabel htmlFor={name}>{label}</FormLabel>
+          <Textarea id={name} {...rest} {...field} />
+          <FormErrorMessage>{form.errors[name]}</FormErrorMessage>
+        </FormControl>
+      )}
+    </Field>
     );
   };
   

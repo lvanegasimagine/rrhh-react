@@ -5,7 +5,7 @@ import {
   FormControl,
   FormLabel,
   FormErrorMessage
-} from '@chakra-ui/core'
+} from '@chakra-ui/react'
 
 function ChakraInput (props) {
   const { label, name, ...rest } = props

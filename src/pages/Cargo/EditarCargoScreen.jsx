@@ -15,11 +15,13 @@ import { FaSync, FaArrowLeft } from 'react-icons/fa';
 import { getDepartamentos } from '../../api/departamentoResponse';
 import TextField from '../../styled/TextField';
 import * as Yup from 'yup';
-import { Formik } from 'formik';
 import TextAreaField from '../../styled/TextAreaField';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getCargo, updateCargo } from '../../api/cargoResponse';
+import { Form, Formik } from 'formik';
+import FormikControl from '../../utils/Form/FormikControl';
+import { AlertStyled } from '../../styled/AlertStyled';
 
 const EditarCargoScreen = () => {
   const { id } = useParams();
@@ -31,7 +33,7 @@ const EditarCargoScreen = () => {
     getCargo
   );
 
-  const { data: departamentoList } = useQuery(
+  const { data: departamentoList, isLoading: departamentoLoading } = useQuery(
     ['departamento'],
     getDepartamentos,
     {
@@ -43,7 +45,7 @@ const EditarCargoScreen = () => {
 
   const { mutateAsync, isLoading: isMutating } = useMutation(updateCargo);
 
-  if (isLoading) {
+  if (isLoading && departamentoLoading) {
     return (
       <Container>
         <Flex py="5" justifyContent="center">
@@ -57,22 +59,28 @@ const EditarCargoScreen = () => {
     return (
       <Container>
         <Flex py="5" justifyContent="center">
-          Error: {error.message}
+          <AlertStyled error={error.message} />
         </Flex>
       </Container>
     );
   }
 
-  const { _id, nombre_departamento } = data.departamento;
+  if (departamentoLoading) {
+    return (
+      <Container>
+        <Flex py="5" justifyContent="center">
+          <Spinner size="xl" />
+        </Flex>
+      </Container>
+    );
+  }
 
-  const drop = departamentoList.map((departamento) => ({
+  const { _id, nombre_departamento } = data?.departamento;
+
+  const drop = departamentoList?.map(departamento => ({
     key: departamento.nombre_departamento,
     value: departamento._id,
   }));
-
-  console.log(_id, nombre_departamento, drop)
-
-  
 
   const initialValues = {
     nombre_cargo: data?.nombre_cargo,
@@ -89,17 +97,18 @@ const EditarCargoScreen = () => {
   });
 
   const onSubmit = (values, actions) => {
+    console.log('Form Data', values);
     mutateAsync(
-          { ...values, id },
-          {
-            onSuccess: () => {
-              queryClient.setQueryData(['cargo', { id }], values);
-              actions.resetForm();
-              actions.setSubmitting(false);
-              navigate('/listar-cargo');
-            },
-          }
-        );
+      { ...values, id },
+      {
+        onSuccess: () => {
+          queryClient.setQueryData(['cargo', { id }], values);
+          actions.resetForm();
+          actions.setSubmitting(false);
+          navigate('/listar-cargo');
+        },
+      }
+    );
   };
 
   return (
@@ -108,15 +117,9 @@ const EditarCargoScreen = () => {
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
-      {formik => (
-        <>
-          {isError && <Text>Error al crear el cargo</Text>}
-          {error && <Text>Error al crear el cargo</Text>}
-          <Text fontSize="2xl" paddingTop={'35'} paddingBottom={'2'}>
-            Actualizar Cargo
-          </Text>
-          <hr />
-          <Box
+      {formik => {
+        return (
+          <Form
             as="form"
             paddingTop={'35'}
             w="100%"
@@ -124,39 +127,32 @@ const EditarCargoScreen = () => {
             onSubmit={formik.handleSubmit}
             autoComplete="off"
           >
-            <TextField
-              top={10}
+            <Text fontSize="2xl" paddingTop={'35'} paddingBottom={'2'}>
+              Actualizar Cargo
+            </Text>
+            <hr />
+            <FormikControl
               requir={true}
+              control="chakraInput"
+              type="text"
+              label="Cargo"
               name="nombre_cargo"
-              label="Nombre Cargo"
-              placeholder="Digita Nombre Cargo"
               maxW={'70%'}
             />
-
-            {/* <FormControl isRequired paddingTop={'7'}>
-              <FormLabel htmlFor="departamento">Departamento</FormLabel>
-              <Select
-                name="departamento"
-                // placeholder="Seleccione Departamento a asignar"
-                maxW={'70%'}
-                // value={formik.values.departamento}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              >
-                {departamentoList?.map(departamento => (
-                  <option key={departamento._id} value={departamento._id}>
-                    {departamento.nombre_departamento}
-                  </option>
-                ))}
-              </Select>
-            </FormControl> */}
-
-            <TextAreaField
-              top={10}
+            <FormikControl
+              control="select"
+              label="Departamento"
+              name="departamento"
+              defaultid={_id}
+              defaultnombre={nombre_departamento}
+              options={drop || []}
+              maxW={'70%'}
+            />
+            <FormikControl
               requir={true}
-              name="descripcion"
+              control="textarea"
               label="Descripcion"
-              placeholder="Digita Descripcion"
+              name="descripcion"
               maxW={'70%'}
             />
 
@@ -188,9 +184,9 @@ const EditarCargoScreen = () => {
                 </Button>
               </Link>
             </Stack>
-          </Box>
-        </>
-      )}
+          </Form>
+        );
+      }}
     </Formik>
   );
 };
