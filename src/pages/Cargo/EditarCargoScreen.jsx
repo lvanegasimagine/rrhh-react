@@ -22,11 +22,15 @@ import { getCargo, updateCargo } from '../../api/cargoResponse';
 import { Form, Formik } from 'formik';
 import FormikControl from '../../utils/Form/FormikControl';
 import { AlertStyled } from '../../styled/AlertStyled';
+import { useState } from 'react';
 
 const EditarCargoScreen = () => {
   const { id } = useParams();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+
+  // const [idDefault, setIdDefault] = useState('');
+  // const [nombreDefault, setNombreDefault] = useState('');
 
   const { data, isLoading, isError, error } = useQuery(
     ['cargo', { id }],
@@ -35,17 +39,12 @@ const EditarCargoScreen = () => {
 
   const { data: departamentoList, isLoading: departamentoLoading } = useQuery(
     ['departamento'],
-    getDepartamentos,
-    {
-      retry: 2,
-      retryDelay: 1000,
-      cacheTime: 3000,
-    }
+    getDepartamentos
   );
 
   const { mutateAsync, isLoading: isMutating } = useMutation(updateCargo);
 
-  if (isLoading && departamentoLoading) {
+  if (isLoading) {
     return (
       <Container>
         <Flex py="5" justifyContent="center">
@@ -65,17 +64,7 @@ const EditarCargoScreen = () => {
     );
   }
 
-  if (departamentoLoading) {
-    return (
-      <Container>
-        <Flex py="5" justifyContent="center">
-          <Spinner size="xl" />
-        </Flex>
-      </Container>
-    );
-  }
-
-  const { _id, nombre_departamento } = data?.departamento;
+  const { _id, nombre_departamento } = data['departamento'];
 
   const drop = departamentoList?.map(departamento => ({
     key: departamento.nombre_departamento,
