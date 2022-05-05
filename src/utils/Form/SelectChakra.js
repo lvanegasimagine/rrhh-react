@@ -10,7 +10,7 @@ function SelectChakra(props) {
   return (
     <FormControl isRequired paddingTop={'7'}>
       <FormLabel htmlFor={name}>{label}</FormLabel>
-      <Field as="select" id={name} name={name} {...rest}>
+      <Select id={name} name={name} {...rest} maxW={'70%'}>
         <option value={defaultid}>{defaultnombre}</option>
         {options.map(option => {
           return (
@@ -19,7 +19,7 @@ function SelectChakra(props) {
             </option>
           );
         })}
-      </Field>
+      </Select>
       <FormErrorMessage>{TextError}</FormErrorMessage>
     </FormControl>
   );

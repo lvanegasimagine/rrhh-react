@@ -75,7 +75,6 @@ const NuevoCargoScreen = () => {
             autoComplete="off"
           >
             <TextField
-              top={10}
               requir={true}
               name="nombre_cargo"
               label="Nombre Cargo"
