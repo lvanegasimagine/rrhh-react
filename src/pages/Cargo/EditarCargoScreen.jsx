@@ -1,36 +1,26 @@
 import {
   Container,
   Text,
-  Box,
-  FormControl,
-  FormLabel,
   Stack,
   Button,
-  Select,
   Flex,
   Spinner,
 } from '@chakra-ui/react';
 import React from 'react';
 import { FaSync, FaArrowLeft } from 'react-icons/fa';
 import { getDepartamentos } from '../../api/departamentoResponse';
-import TextField from '../../styled/TextField';
 import * as Yup from 'yup';
-import TextAreaField from '../../styled/TextAreaField';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getCargo, updateCargo } from '../../api/cargoResponse';
 import { Form, Formik } from 'formik';
 import { AlertStyled } from '../../styled/AlertStyled';
-import { useState } from 'react';
 import FormikControl from '../../utils/FormikControl';
 
 const EditarCargoScreen = () => {
   const { id } = useParams();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-
-  // const [idDefault, setIdDefault] = useState('');
-  // const [nombreDefault, setNombreDefault] = useState('');
 
   const { data, isLoading, isError, error } = useQuery(
     ['cargo', { id }],
@@ -108,13 +98,7 @@ const EditarCargoScreen = () => {
     >
       {formik => {
         return (
-          <Form
-            as="form"
-            paddingTop={'35'}
-            w="100%"
-            p={4}
-            autoComplete="off"
-          >
+          <Form as="form" paddingTop={'35'} w="100%" p={4} autoComplete="off">
             <Text fontSize="2xl" paddingTop={'35'} paddingBottom={'2'}>
               Actualizar Cargo
             </Text>

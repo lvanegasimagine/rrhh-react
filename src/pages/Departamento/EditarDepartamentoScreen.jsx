@@ -7,7 +7,7 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react';
-import { Formik } from 'formik';
+import { Formik, Form } from 'formik';
 import React from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -18,6 +18,8 @@ import {
 } from '../../api/departamentoResponse';
 import TextField from '../../styled/TextField';
 import { FaArrowLeft, FaSync } from 'react-icons/fa';
+import { AlertStyled } from '../../styled/AlertStyled';
+import FormikControl from '../../utils/FormikControl';
 
 const EditarDepartamentoScreen = () => {
   const { id } = useParams();
@@ -28,7 +30,9 @@ const EditarDepartamentoScreen = () => {
     ['departamento', { id }],
     getDepartamento
   );
-  const { mutateAsync, isLoading: isMutating } = useMutation(updateDepartamento);
+
+  const { mutateAsync, isLoading: isMutating } =
+    useMutation(updateDepartamento);
 
   if (isLoading) {
     return (
@@ -44,49 +48,51 @@ const EditarDepartamentoScreen = () => {
     return (
       <Container>
         <Flex py="5" justifyContent="center">
-          Error: {error.message}
+          <AlertStyled error={error.message} />
         </Flex>
       </Container>
     );
   }
 
+  const initialValues = {
+    nombre_departamento: data?.nombre_departamento,
+    email_corporativo: data?.email_corporativo,
+    telefono_corporativo: data?.telefono_corporativo,
+  };
+
+  const validationSchema = Yup.object({
+    nombre_departamento: Yup.string().required('Correo Obligatorio'),
+    email_corporativo: Yup.string()
+      .required('Correo Obligatorio')
+      .email('Correo Invalido'),
+    telefono_corporativo: Yup.string()
+      .required('Telefono Obligatorio')
+      .max(9, 'Maximo 9 Caracteres'),
+  });
+
+  const onSubmit = (values, actions) => {
+    mutateAsync(
+      { ...values, id },
+      {
+        onSuccess: () => {
+          queryClient.setQueryData(['departamento', { id }], values);
+          actions.resetForm();
+          actions.setSubmitting(false);
+          navigate('/listar-departamento');
+        },
+      }
+    );
+  };
+
   return (
     <Formik
-      initialValues={{
-        nombre_departamento: data?.nombre_departamento,
-        email_corporativo: data?.email_corporativo,
-        telefono_corporativo: data?.telefono_corporativo,
-      }}
-      validationSchema={Yup.object({
-        nombre_departamento: Yup.string().required('Correo Obligatorio'),
-        email_corporativo: Yup.string()
-          .required('Correo Obligatorio')
-          .email('Correo Invalido'),
-        telefono_corporativo: Yup.string()
-          .required('Telefono Obligatorio')
-          .max(9, 'Maximo 9 Caracteres'),
-      })}
-      onSubmit={(values, actions) => {
-        mutateAsync(
-          { ...values, id },
-          {
-            onSuccess: () => {
-              queryClient.setQueryData(['departamento', { id }], values);
-              actions.resetForm();
-              actions.setSubmitting(false);
-              navigate('/listar-departamento');
-            },
-          }
-        );
-      }}
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
     >
-      {formik => (
-        <>
-          <Text fontSize="2xl" paddingTop={'35'} paddingBottom={'2'}>
-            Actualizar departamento
-          </Text>
-          <hr />
-          <Box
+      {formik => {
+        return (
+          <Form
             as="form"
             paddingTop={'35'}
             w="100%"
@@ -94,31 +100,34 @@ const EditarDepartamentoScreen = () => {
             onSubmit={formik.handleSubmit}
             autoComplete="off"
           >
-            <TextField
-              top={10}
+            <Text fontSize="2xl" paddingTop={'35'} paddingBottom={'2'}>
+              Actualizar departamento
+            </Text>
+            <hr />
+            <FormikControl
               requir={true}
+              control="chakraInput"
+              type="text"
               name="nombre_departamento"
               label="Nombre Departamento"
-              placeholder="Digita Nombre Departamento"
               maxW={'70%'}
             />
-            <TextField
-              top={10}
+            <FormikControl
               requir={true}
+              control="chakraInput"
+              type="email"
               name="email_corporativo"
-              label="Correo Electronico Corporativo"
-              placeholder="Digita Correo Electronico"
+              label="Correo Corporativo"
               maxW={'70%'}
             />
-            <TextField
-              top={10}
+            <FormikControl
               requir={true}
+              control="chakraInput"
+              type="text"
               name="telefono_corporativo"
-              label="Telefono de Area"
-              placeholder="Digita Telefono de Area"
+              label="Telefono Corporativo"
               maxW={'70%'}
             />
-
             <Stack direction="row" spacing={4} pt="25">
               {isMutating ? (
                 <Button
@@ -148,9 +157,9 @@ const EditarDepartamentoScreen = () => {
                 </Button>
               </Link>
             </Stack>
-          </Box>
-        </>
-      )}
+          </Form>
+        );
+      }}
     </Formik>
   );
 };

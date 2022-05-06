@@ -29,6 +29,7 @@ const NuevoDepartamentoScreen = () => {
   });
 
   const onSubmit = (values, actions) => {
+    console.log(values);
     mutate(values, {
       onSuccess: () => {
         actions.resetForm();
@@ -46,14 +47,14 @@ const NuevoDepartamentoScreen = () => {
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
-      {formik => {
+      {(formik) => {
         return (
           <>
             <Text fontSize="2xl" paddingTop={'35'} paddingBottom={'2'}>
               Nuevo departamento
             </Text>
             <hr />
-            <Form as="form" paddingTop={'35'} w="100%" p={4} autoComplete="off">
+            <Form as="form" paddingTop={'35'} w="100%" p={4} autoComplete="off" onSubmit={formik.handleSubmit}>
               <FormikControl
                 control="chakraInput"
                 label="Nombre departamento"
