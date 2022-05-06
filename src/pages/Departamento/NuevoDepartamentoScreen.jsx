@@ -1,8 +1,7 @@
-import { Text, Box, Stack, Button } from '@chakra-ui/react';
+import { Text, Stack, Button } from '@chakra-ui/react';
 import React from 'react';
-import { FaRegSave, FaArrowLeft, FaSync } from 'react-icons/fa';
+import { FaRegSave, FaArrowLeft } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
-import TextField from '../../styled/TextField';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { useMutateDepartamento } from '../../hooks/useMutate';
@@ -11,7 +10,7 @@ import FormikControl from '../../utils/FormikControl';
 const NuevoDepartamentoScreen = () => {
   let navigate = useNavigate();
 
-  const { mutate, isError, error, isLoading } = useMutateDepartamento();
+  const { mutate, isError, isLoading } = useMutateDepartamento();
 
   const initialValues = {
     nombre_departamento: 'hola2',
