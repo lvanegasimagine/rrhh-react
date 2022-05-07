@@ -15,14 +15,20 @@ import { FaRegSave, FaArrowLeft } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { useMutateDepartamento, useQueryCargo, useQueryDepartamento } from '../../hooks/useMutate';
+import {
+  useMutateDepartamento,
+  useMutateEmpleado,
+  useQueryCargo,
+  useQueryDepartamento,
+} from '../../hooks/useMutate';
 import FormikControl from '../../utils/FormikControl';
 import { SpinnerStyled } from '../../styled/Spinner';
 
 const NuevoEmpleadoScreen = () => {
   let navigate = useNavigate();
 
-  const { mutate, isError, isLoading } = useMutateDepartamento();
+  const { mutate, isError, isLoading } = useMutateEmpleado();
+
   const { data: departamentoList, isLoading: loadingDepartamento } =
     useQueryDepartamento();
 
@@ -84,13 +90,13 @@ const NuevoEmpleadoScreen = () => {
 
   const onSubmit = (values, actions) => {
     console.log(values);
-    // mutate(values, {
-    //   onSuccess: () => {
-    //     actions.resetForm();
-    //     actions.setSubmitting(false);
-    //     navigate('/listar-departamento');
-    //   },
-    // });
+    mutate(values, {
+      onSuccess: () => {
+        actions.resetForm();
+        actions.setSubmitting(false);
+        navigate('/listar-empleado');
+      },
+    });
   };
 
   if (isError) return <p>Error</p>;
@@ -123,10 +129,10 @@ const NuevoEmpleadoScreen = () => {
                   alignItems="flex-start"
                   autoCapitalize="off"
                 >
-                <VStack spacing={3} alignItems="flex-start">
-                  <Heading size="lg">Datos Personales</Heading>
-                  <Divider w="full" orientation="horizontal" />
-                </VStack>
+                  <VStack spacing={3} alignItems="flex-start">
+                    <Heading size="lg">Datos Personales</Heading>
+                    <Divider w="full" orientation="horizontal" />
+                  </VStack>
                   <SimpleGrid columns={3} columnGap={3} rowGap={6} w="full">
                     <GridItem colSpan={1}>
                       <FormikControl
@@ -222,28 +228,29 @@ const NuevoEmpleadoScreen = () => {
                     <Divider w="full" orientation="horizontal" />
                   </VStack>
                   <SimpleGrid columns={2} columnGap={3} rowGap={6} w="full">
-                  <GridItem colSpan={1}>
-                    <FormikControl
-                      control="select"
-                      requir="true"
-                      label="Cargo a Asignar"
-                      name="cargo"
-                      options={cargo}
-                    />
-                  </GridItem>
-                  <GridItem colSpan={1}>
-                    <FormikControl
-                      control="select"
-                      requir="true"
-                      label="Departamento a Asignar"
-                      name="departamento"
-                      options={departamento}
-                    />
-                  </GridItem>
+                    <GridItem colSpan={1}>
+                      <FormikControl
+                        control="select"
+                        requir="true"
+                        label="Cargo a Asignar"
+                        name="cargo"
+                        options={cargo}
+                      />
+                    </GridItem>
+                    <GridItem colSpan={1}>
+                      <FormikControl
+                        control="select"
+                        requir="true"
+                        label="Departamento a Asignar"
+                        name="departamento"
+                        options={departamento}
+                      />
+                    </GridItem>
                   </SimpleGrid>
-                  <Stack direction="row" spacing={4} pt="25">
+                  <Stack direction="row" spacing={4} pt="25" pb='10'>
                     {isLoading ? (
                       <Button
+                        size="lg"
                         isLoading
                         loadingText="Guardando..."
                         colorScheme="teal"
@@ -251,6 +258,7 @@ const NuevoEmpleadoScreen = () => {
                       ></Button>
                     ) : (
                       <Button
+                        size="lg"
                         type="submit"
                         leftIcon={<FaRegSave />}
                         colorScheme="blue"
@@ -259,8 +267,9 @@ const NuevoEmpleadoScreen = () => {
                         Guardar
                       </Button>
                     )}
-                    <Link to="/listar-departamento">
+                    <Link to="/listar-empleado">
                       <Button
+                        size="lg"
                         leftIcon={<FaArrowLeft />}
                         colorScheme="orange"
                         variant="outline"
