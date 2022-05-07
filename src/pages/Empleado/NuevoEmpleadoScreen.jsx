@@ -15,13 +15,18 @@ import { FaRegSave, FaArrowLeft } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { useMutateDepartamento } from '../../hooks/useMutate';
+import { useMutateDepartamento, useQueryCargo, useQueryDepartamento } from '../../hooks/useMutate';
 import FormikControl from '../../utils/FormikControl';
+import { SpinnerStyled } from '../../styled/Spinner';
 
 const NuevoEmpleadoScreen = () => {
   let navigate = useNavigate();
 
   const { mutate, isError, isLoading } = useMutateDepartamento();
+  const { data: departamentoList, isLoading: loadingDepartamento } =
+    useQueryDepartamento();
+
+  const { data: cargoList, isLoading: loadingCargo } = useQueryCargo();
 
   const sexo = [
     { key: 'Seleccione sexo', value: '' },
@@ -37,6 +42,20 @@ const NuevoEmpleadoScreen = () => {
     { key: 'Separado', value: 'Separado' },
     { key: 'Viuda', value: 'Viudo' },
   ];
+
+  if (loadingDepartamento || loadingCargo) {
+    return <SpinnerStyled />;
+  }
+
+  const cargo = cargoList.map(cargo => ({
+    key: cargo.nombre_cargo,
+    value: cargo._id,
+  }));
+
+  const departamento = departamentoList.map(departamento => ({
+    key: departamento.nombre_departamento,
+    value: departamento._id,
+  }));
 
   const initialValues = {
     nombre: 'Clark',
@@ -202,6 +221,26 @@ const NuevoEmpleadoScreen = () => {
                     <Heading size="lg">Asignaciones</Heading>
                     <Divider w="full" orientation="horizontal" />
                   </VStack>
+                  <SimpleGrid columns={2} columnGap={3} rowGap={6} w="full">
+                  <GridItem colSpan={1}>
+                    <FormikControl
+                      control="select"
+                      requir="true"
+                      label="Cargo a Asignar"
+                      name="cargo"
+                      options={cargo}
+                    />
+                  </GridItem>
+                  <GridItem colSpan={1}>
+                    <FormikControl
+                      control="select"
+                      requir="true"
+                      label="Departamento a Asignar"
+                      name="departamento"
+                      options={departamento}
+                    />
+                  </GridItem>
+                  </SimpleGrid>
                   <Stack direction="row" spacing={4} pt="25">
                     {isLoading ? (
                       <Button
