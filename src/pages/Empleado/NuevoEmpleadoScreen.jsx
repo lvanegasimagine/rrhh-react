@@ -1,266 +1,243 @@
 import {
+  Text,
+  Stack,
+  Button,
   Container,
   Flex,
   VStack,
   Heading,
-  Divider,
   SimpleGrid,
   GridItem,
-  FormControl,
-  FormLabel,
-  Input,
-  Textarea,
-  Select,
-  Button,
-  Text,
+  Divider,
 } from '@chakra-ui/react';
-import { Formik } from 'formik';
-import { FcCheckmark, FcCancel } from 'react-icons/fc';
-import { useNavigate } from 'react-router-dom';
-import { getDepartamentos } from '../../api/departamentoResponse';
-import { useQuery } from 'react-query';
-import { getCargos } from '../../api/cargoResponse';
-import { useMutateEmpleado } from '../../hooks/useMutate';
-import TextField from '../../styled/TextField';
-import TextAreaField from '../../styled/TextAreaField';
+import React from 'react';
+import { FaRegSave, FaArrowLeft } from 'react-icons/fa';
+import { Link, useNavigate } from 'react-router-dom';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import { useMutateDepartamento } from '../../hooks/useMutate';
+import FormikControl from '../../utils/FormikControl';
 
-export default function NuevoEmpleadoScreen() {
+const NuevoEmpleadoScreen = () => {
   let navigate = useNavigate();
 
-  const { data: departamentoList } = useQuery(
-    ['departamento'],
-    getDepartamentos,
-    {
-      retry: 2,
-      retryDelay: 1000,
-      cacheTime: 3000,
-    }
-  );
+  const { mutate, isError, isLoading } = useMutateDepartamento();
 
-  const { data: cargoList } = useQuery(['cargo'], getCargos, {
-    retry: 2,
-    retryDelay: 1000,
-    cacheTime: 3000,
-  });
+  const sexo = [
+    { key: 'Seleccione sexo', value: '' },
+    { key: 'Masculino', value: 'Masculino' },
+    { key: 'Femenino', value: 'Femenino' },
+  ];
 
-  const { mutate, isError, error, isLoading } = useMutateEmpleado();
+  const estadoCivil = [
+    { key: 'Seleccione estado Civil', value: '' },
+    { key: 'Soltero', value: 'Soltero' },
+    { key: 'Casado', value: 'Casado' },
+    { key: 'Divorciado', value: 'Divorciado' },
+    { key: 'Separado', value: 'Separado' },
+    { key: 'Viuda', value: 'Viudo' },
+  ];
+
+  const initialValues = {
+    nombre: 'Clark',
+    apellido: 'Kent',
+    correo_electronico: 'mundo@mund.com',
+    cedula: '001-020565-0010H',
+    telefono: '9874-8561',
+    cargo: '',
+    departamento: '',
+    direccion: 'Metropolis wey',
+    estado_civil: '',
+    fecha_nacimiento: '2022-02-01',
+    ciudad_nacimiento: 'Managua, Nicaragua',
+    sexo: '',
+  };
+
+  // const validationSchema = Yup.object({
+  //   nombre_departamento: Yup.string().required('Correo Obligatorio'),
+  //   email_corporativo: Yup.string()
+  //     .required('Correo Obligatorio')
+  //     .email('Correo Invalido'),
+  //   telefono_corporativo: Yup.string()
+  //     .required('Telefono Obligatorio')
+  //     .max(9, 'Maximo 9 Caracteres'),
+  // });
+
+  const onSubmit = (values, actions) => {
+    console.log(values);
+    // mutate(values, {
+    //   onSuccess: () => {
+    //     actions.resetForm();
+    //     actions.setSubmitting(false);
+    //     navigate('/listar-departamento');
+    //   },
+    // });
+  };
+
+  if (isError) return <p>Error</p>;
 
   return (
     <Formik
-      initialValues={{
-        nombre: '',
-        apellido: '',
-        cedula: '',
-        direccion: '',
-        fecha_nacimiento: '',
-        ciudad_nacimiento: '',
-        sexo: '',
-        estado_civil: '',
-        telefono: '',
-        correo_electronico: '',
-        cargo: '',
-        departamento: '',
-      }}
-      onSubmit={(values, actions) => {
-        console.log(values);
-        mutate(values, {
-          onSuccess: () => {
-            actions.resetForm();
-            actions.setSubmitting(false);
-            navigate('/listar-empleado');
-          },
-        });
-      }}
+      initialValues={initialValues}
+      // validationSchema={validationSchema}
+      onSubmit={onSubmit}
     >
-      {formik => (
-        <>
-          <Container maxW="container.xl" p={0}>
-            {isError && <Text>Error al crear el cargo</Text>}
-            {error && <Text>Error al crear el cargo</Text>}
-            <Text fontSize="2xl" paddingTop={'35'} paddingBottom={'2'}>
-              Nuevo Empleado
-            </Text>
-            <hr />
-            <Flex
-              h={{ base: 'auto', md: '100vh' }}
-              py={[0, 5, 10]}
-              direction={{ base: 'column-reverse', md: 'row' }}
-            >
-              <VStack
-                as="form"
-                w={'full'}
-                h={'full'}
-                p={2}
-                spacing={8}
-                alignItems="flex-start"
-                autoComplete="off"
-                onSubmit={formik.handleSubmit}
+      {formik => {
+        return (
+          <>
+            <Container maxW="container.xl" p={0}>
+              <Text fontSize="2xl" pt={'35'} paddingBottom={'2'}>
+                Nuevo Empleado
+              </Text>
+              <hr />
+              <Flex
+                h={{ base: 'auto', md: '100vh' }}
+                py={[0, 5, 10]}
+                direction={{ base: 'column-reverse', md: 'row' }}
               >
+                <VStack
+                  as={Form}
+                  w={'full'}
+                  h={'full'}
+                  p={2}
+                  spacing={8}
+                  alignItems="flex-start"
+                  autoCapitalize="off"
+                >
                 <VStack spacing={3} alignItems="flex-start">
                   <Heading size="lg">Datos Personales</Heading>
                   <Divider w="full" orientation="horizontal" />
                 </VStack>
-                <SimpleGrid columns={3} columnGap={3} rowGap={6} w="full">
-                  <GridItem colSpan={1}>
-                    <TextField
-                      requir={true}
-                      name="nombre"
-                      label="Nombre"
-                      placeholder="Digita nombres"
-                    />
-                  </GridItem>
-                  <GridItem colSpan={1}>
-                    <TextField
-                      requir={true}
-                      name="apellido"
-                      label="Apellido"
-                      placeholder="Digita apellidos"
-                    />
-                  </GridItem>
-                  <GridItem colSpan={1}>
-                    <TextField
-                      requir={true}
-                      name="cedula"
-                      label="Cedula"
-                      placeholder="Digita cedula"
-                    />
-                  </GridItem>
-                  <GridItem colSpan={3}>
-                    <TextAreaField
-                      requir={true}
-                      name="direccion"
-                      label="Direccion"
-                      placeholder="Digita direccion"
-                    />
-                  </GridItem>
-                  <GridItem colSpan={1}>
-                    <TextField
-                      type="date"
-                      requir={true}
-                      name="fecha_nacimiento"
-                      label="Fecha Nacimiento"
-                    />
-                  </GridItem>
-                  <GridItem colSpan={1}>
-                    <TextField
-                      requir={true}
-                      name="ciudad_nacimiento"
-                      label="Lugar Nacimiento"
-                      placeholder="Digita Lugar Nacimiento"
-                    />
-                  </GridItem>
-                  <GridItem colSpan={1}>
-                    <FormControl>
-                      <FormLabel>Sexo</FormLabel>
-                      <Select
+                  <SimpleGrid columns={3} columnGap={3} rowGap={6} w="full">
+                    <GridItem colSpan={1}>
+                      <FormikControl
+                        control="chakraInput"
+                        label="Nombre departamento"
+                        name="nombre"
+                      />
+                    </GridItem>
+                    <GridItem colSpan={1}>
+                      <FormikControl
+                        control="chakraInput"
+                        label="Apellido"
+                        name="apellido"
+                      />
+                    </GridItem>
+                    <GridItem colSpan={1}>
+                      <FormikControl
+                        control="chakraInput"
+                        requir="true"
+                        name="cedula"
+                        label="Cedula"
+                        placeholder="Ej: 000-000000-0010A"
+                        ext={16}
+                      />
+                    </GridItem>
+                    <GridItem colSpan={3}>
+                      <FormikControl
+                        control="textarea"
+                        requir="true"
+                        name="direccion"
+                        label="Direccion"
+                        placeholder="Digita direccion"
+                      />
+                    </GridItem>
+                    <GridItem colSpan={1}>
+                      <FormikControl
+                        control="chakraInput"
+                        type="date"
+                        requir="true"
+                        name="fecha_nacimiento"
+                        label="Fecha Nacimiento"
+                      />
+                    </GridItem>
+                    <GridItem colSpan={1}>
+                      <FormikControl
+                        control="chakraInput"
+                        requir="true"
+                        name="ciudad_nacimiento"
+                        label="Lugar Nacimiento"
+                        placeholder="Ciudad/Pais"
+                      />
+                    </GridItem>
+                    <GridItem colSpan={1}>
+                      <FormikControl
+                        requir="true"
+                        control="select"
+                        label="Sexo"
                         name="sexo"
-                        placeholder="Selecciona Genero"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      >
-                        <option value="Masculino">Masculino</option>
-                        <option value="Femenino">Femenino </option>
-                      </Select>
-                    </FormControl>
-                  </GridItem>
-                  <GridItem colSpan={1}>
-                    <FormControl>
-                      <FormLabel>Estado Civil</FormLabel>
-                      <Select
+                        options={sexo}
+                      />
+                    </GridItem>
+                    <GridItem colSpan={1}>
+                      <FormikControl
+                        requir="true"
+                        control="select"
+                        label="Estado Civil"
                         name="estado_civil"
-                        placeholder="Selecciona Estado Civil"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
+                        options={estadoCivil}
+                      />
+                    </GridItem>
+                    <GridItem colSpan={1}>
+                      <FormikControl
+                        control="chakraInput"
+                        requir="true"
+                        name="telefono"
+                        label="Celular"
+                        placeholder="0000-0000"
+                      />
+                    </GridItem>
+                    <GridItem colSpan={1}>
+                      <FormikControl
+                        control="chakraInput"
+                        type="email"
+                        requir="true"
+                        name="correo_electronico"
+                        label="Email"
+                        placeholder="tucorreo@correo.com"
+                      />
+                    </GridItem>
+                  </SimpleGrid>
+                  <VStack spacing={3} alignItems="flex-start">
+                    <Heading size="lg">Asignaciones</Heading>
+                    <Divider w="full" orientation="horizontal" />
+                  </VStack>
+                  <Stack direction="row" spacing={4} pt="25">
+                    {isLoading ? (
+                      <Button
+                        isLoading
+                        loadingText="Guardando..."
+                        colorScheme="teal"
+                        variant="outline"
+                      ></Button>
+                    ) : (
+                      <Button
+                        type="submit"
+                        leftIcon={<FaRegSave />}
+                        colorScheme="blue"
+                        variant="solid"
                       >
-                        <option value="Soltero">Soltero</option>
-                        <option value="Casado">Casado</option>
-                      </Select>
-                    </FormControl>
-                  </GridItem>
-                  <GridItem colSpan={1}>
-                    <TextField
-                      requir={true}
-                      name="telefono"
-                      label="Celular"
-                      placeholder="Digita Celular"
-                    />
-                  </GridItem>
-                  <GridItem colSpan={1}>
-                    <TextField
-                      requir={true}
-                      name="correo_electronico"
-                      label="Correo Electronico"
-                      placeholder="Digita Correo Electronico"
-                    />
-                  </GridItem>
-                </SimpleGrid>
-                <VStack spacing={3} alignItems="flex-start">
-                  <Heading size="lg">Asignaciones</Heading>
-                  <Divider w="full" orientation="horizontal" />
+                        Guardar
+                      </Button>
+                    )}
+                    <Link to="/listar-departamento">
+                      <Button
+                        leftIcon={<FaArrowLeft />}
+                        colorScheme="orange"
+                        variant="outline"
+                      >
+                        Atras
+                      </Button>
+                    </Link>
+                  </Stack>
                 </VStack>
-                <SimpleGrid columns={2} columnGap={3} rowGap={6} w="full">
-                  <GridItem colSpan={1}>
-                    <FormControl isRequired>
-                      <FormLabel htmlFor="cargo">Cargo a Asignar</FormLabel>
-                      <Select
-                        name="cargo"
-                        value={formik.values.cargo}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      >
-                        {cargoList?.map(cargo => (
-                          <option key={cargo._id} value={cargo._id}>
-                            {cargo.nombre_cargo}
-                          </option>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </GridItem>
-                  <GridItem colSpan={1}>
-                    <FormControl isRequired>
-                      <FormLabel htmlFor="departamento">
-                        Departamento a Asignar
-                      </FormLabel>
-                      <Select
-                        name="departamento"
-                        value={formik.values.departamento}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      >
-                        {departamentoList?.map(departamento => (
-                          <option
-                            key={departamento._id}
-                            value={departamento._id}
-                          >
-                            {departamento.nombre_departamento}
-                          </option>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </GridItem>
-                  <GridItem colSpan={1} pt="2">
-                    <Button
-                      size="lg"
-                      w="full"
-                      colorScheme="facebook"
-                      type="submit"
-                    >
-                      {' '}
-                      <FcCheckmark /> &nbsp; Guardar
-                    </Button>
-                  </GridItem>
-                  <GridItem colSpan={1} pt="2">
-                    <Button size="lg" w="full" colorScheme="red">
-                      {' '}
-                      <FcCancel /> &nbsp; Atras
-                    </Button>
-                  </GridItem>
-                </SimpleGrid>
-              </VStack>
-            </Flex>
-          </Container>
-        </>
-      )}
+              </Flex>
+            </Container>
+          </>
+        );
+      }}
     </Formik>
   );
-}
+};
+
+export default NuevoEmpleadoScreen;

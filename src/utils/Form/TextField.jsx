@@ -4,16 +4,16 @@ import {
   FormLabel,
   Input,
 } from '@chakra-ui/react';
-import { Field, useField } from 'formik';
+import { Field } from 'formik';
 
 const TextField = (props) => {
-  const { label, name, altura, requir, ...rest } = props
+  const { label, name, altura, requir, ext, ...rest } = props
   return (
     <Field name={name}>
       {({ field, form }) => (
         <FormControl isInvalid={form.errors[name] && form.touched[name]} isRequired={requir} pt={10}>
           <FormLabel htmlFor={name}>{label}</FormLabel>
-          <Input id={name} {...rest} {...field} />
+          <Input id={name} {...rest} {...field} maxLength={ext} />
           <FormErrorMessage>{form.errors[name]}</FormErrorMessage>
         </FormControl>
       )}

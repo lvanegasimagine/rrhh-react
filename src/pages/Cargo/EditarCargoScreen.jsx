@@ -112,7 +112,7 @@ const EditarCargoScreen = () => {
               maxW={'70%'}
             />
             <FormikControl
-              control="select"
+              control="selectFilter"
               label="Departamento"
               name="departamento"
               defaultid={_id}

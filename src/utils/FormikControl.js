@@ -2,6 +2,7 @@ import React from 'react';
 import TextAreaField from './Form/TextAreaField';
 import TextField from './Form/TextField';
 import SelectChakra from './Form/SelectChakra';
+import SelectChakraFilter from './Form/SelectChakraFilter';
 
 function FormikControl(props) {
   const { control, ...rest } = props;
@@ -12,6 +13,8 @@ function FormikControl(props) {
       return <TextAreaField {...rest} />;
     case 'select':
       return <SelectChakra {...rest} />;
+    case 'selectFilter':
+      return <SelectChakraFilter {...rest} />;
     default:
       return null;
   }
