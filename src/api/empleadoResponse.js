@@ -16,6 +16,7 @@ export const getEmpleado = async ({ queryKey }) => {
 
     try {
         const {data} = await axios.get(`${API}/empleado/${id}`);
+        return data;
     } catch (error) {
         console.log(error)
     }
