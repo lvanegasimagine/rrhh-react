@@ -7,8 +7,7 @@ export const getDepartamentos = async () => {
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      
-    }
+    },
   });
   return data;
 };
@@ -39,4 +38,13 @@ export const updateDepartamento = async ({ id, ...updateDeparmento }) => {
 export const deleteDepartamento = async id => {
   await axios.delete(`${API}/departamento/${id}`);
   return true;
+};
+
+export const getDepartamentoCount = async () => {
+  try {
+    const { data } = await axios.get(`${API}/departamento/get/count`);
+    return data;
+  } catch (error) {
+    throw new Error(error.response.data);
+  }
 };

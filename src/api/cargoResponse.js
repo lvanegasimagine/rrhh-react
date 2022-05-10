@@ -33,3 +33,12 @@ export const deleteCargo = async (id) => {
   console.log(data);
   return data;
 }
+
+export const getCargoCount = async () => {
+  try {
+    const { data } = await axios.get(`${API}/cargo/get/count`);
+    return data;
+  } catch (error) {
+    throw new Error(error.response.data);
+  }
+};

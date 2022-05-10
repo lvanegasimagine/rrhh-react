@@ -49,3 +49,12 @@ export const deleteEmpleado = async (id) => {
     }
 }
 
+export const getEmpleadoCount = async () => {
+    try {
+      const { data } = await axios.get(`${API}/empleado/get/count`);
+      return data;
+    } catch (error) {
+      throw new Error(error.response.data);
+    }
+  };
+

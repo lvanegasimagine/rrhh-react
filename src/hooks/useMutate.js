@@ -1,7 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { createCargo, getCargos } from '../api/cargoResponse';
-import { createDepartamento, getDepartamentos } from '../api/departamentoResponse';
-import { createEmpleado, getEmpleados } from '../api/empleadoResponse';
+import { createCargo, getCargoCount, getCargos } from '../api/cargoResponse';
+import { createDepartamento, getDepartamentoCount, getDepartamentos } from '../api/departamentoResponse';
+import { createEmpleado, getEmpleadoCount, getEmpleados } from '../api/empleadoResponse';
+
+const options = {
+  retry: 2,
+  retryDelay: 1000,
+  cacheTime: 3000,
+}
 
 export function useMutateDepartamento() {
   const queryClient = useQueryClient();
@@ -17,11 +23,7 @@ export function useMutateDepartamento() {
 }
 
 export function useQueryDepartamento() {
-  return useQuery(['departamento'], getDepartamentos, {
-    retry: 2,
-    retryDelay: 1000,
-    cacheTime: 3000,
-  });
+  return useQuery(['departamento'], getDepartamentos, options);
 }
 
 export function useMutateCargo() {
@@ -38,19 +40,11 @@ export function useMutateCargo() {
 }
 
 export function useQueryCargo() {
-  return useQuery(['cargo'], getCargos, {
-    retry: 2,
-    retryDelay: 1000,
-    cacheTime: 3000,
-  });
+  return useQuery(['cargo'], getCargos, options);
 }
 
 export function useQueryEmpleado() {
-  return useQuery(['empleado'], getEmpleados, {
-    retry: 2,
-    retryDelay: 1000,
-    cacheTime: 3000,
-  })
+  return useQuery(['empleado'], getEmpleados, options)
 }
 
 export function useMutateEmpleado() {
@@ -65,3 +59,16 @@ export function useMutateEmpleado() {
     },
   });
 }
+
+export function useQueryCountDepartamento(){
+  return useQuery(['departamentoCount'], getDepartamentoCount,options)
+}
+
+export function useQueryCountEmpleado(){
+  return useQuery(['empleadoCount'], getEmpleadoCount , options)
+}
+
+export function useQueryCountCargo(){
+  return useQuery(['cargoCount'], getCargoCount, options)
+}
+
