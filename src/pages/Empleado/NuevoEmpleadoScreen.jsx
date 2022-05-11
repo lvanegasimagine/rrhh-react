@@ -16,7 +16,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import {
-  useMutateDepartamento,
   useMutateEmpleado,
   useQueryCargo,
   useQueryDepartamento,
@@ -31,7 +30,6 @@ const NuevoEmpleadoScreen = () => {
 
   const { data: departamentoList, isLoading: loadingDepartamento } =
     useQueryDepartamento();
-
   const { data: cargoList, isLoading: loadingCargo } = useQueryCargo();
 
   const sexo = [
@@ -63,6 +61,9 @@ const NuevoEmpleadoScreen = () => {
     value: departamento._id,
   }));
 
+  console.log('lista departamento', departamento)
+
+
   const initialValues = {
     nombre: 'Clark',
     apellido: 'Kent',
@@ -78,15 +79,31 @@ const NuevoEmpleadoScreen = () => {
     sexo: '',
   };
 
-  // const validationSchema = Yup.object({
-  //   nombre_departamento: Yup.string().required('Correo Obligatorio'),
-  //   email_corporativo: Yup.string()
-  //     .required('Correo Obligatorio')
-  //     .email('Correo Invalido'),
-  //   telefono_corporativo: Yup.string()
-  //     .required('Telefono Obligatorio')
-  //     .max(9, 'Maximo 9 Caracteres'),
-  // });
+  const validationSchema = Yup.object({
+    nombre: Yup.string().required('El Nombre es Obligatorio')
+            .max(20, 'El Nombre debe tener menos de 20 caracteres')
+            .min(1, 'El Nombre debe tener mas de 5 caracteres'),
+    apellido: Yup.string().required('El Apellido es Obligatorio')
+            .max(20, 'El Nombre debe tener menos de 20 caracteres')
+            .min(1, 'El Nombre debe tener mas de 5 caracteres'),
+    correo_electronico: Yup.string().required('El Correo Electronico es Obligatorio')
+            .email('El Correo Electronico no es valido'),
+    cedula: Yup.string().required('La Cedula es Obligatoria')
+            .max(16, 'Cedula debe tener 16 caracteres incluido -')
+            .min(16, ''),
+    telefono: Yup.string().required('El Telefono es Obligatorio')
+            .max(9, 'Celular debe tener 9 caracteres incluido -')
+            .min(9, ''),
+    cargo: Yup.string().required('El Cargo es Obligatorio'),
+    departamento: Yup.string().required('El Departamento es Obligatorio'),
+    direccion: Yup.string().required('La Direccion es Obligatoria')
+              .max(250, 'La Direccion debe tener maximo de 250 caracteres')
+              .min(5, 'La Direccion debe tener minimo de 5 caracteres'),
+    estado_civil: Yup.string().required('El Estado Civil es Obligatorio'),
+    fecha_nacimiento: Yup.string().required('La Fecha de Nacimiento es Obligatoria'),
+    ciudad_nacimiento: Yup.string().required('La Ciudad de Nacimiento es Obligatoria'),
+    sexo: Yup.string().required('El Sexo es Obligatorio'),
+  });
 
   const onSubmit = (values, actions) => {
     console.log(values);
@@ -104,7 +121,7 @@ const NuevoEmpleadoScreen = () => {
   return (
     <Formik
       initialValues={initialValues}
-      // validationSchema={validationSchema}
+      validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
       {formik => {
@@ -136,6 +153,7 @@ const NuevoEmpleadoScreen = () => {
                   <SimpleGrid columns={3} columnGap={3} rowGap={6} w="full">
                     <GridItem colSpan={1}>
                       <FormikControl
+                        requir='true'
                         control="chakraInput"
                         label="Nombre departamento"
                         name="nombre"
@@ -143,6 +161,7 @@ const NuevoEmpleadoScreen = () => {
                     </GridItem>
                     <GridItem colSpan={1}>
                       <FormikControl
+                        requir='true'
                         control="chakraInput"
                         label="Apellido"
                         name="apellido"
@@ -165,6 +184,7 @@ const NuevoEmpleadoScreen = () => {
                         name="direccion"
                         label="Direccion"
                         placeholder="Digita direccion"
+                        ext={250}
                       />
                     </GridItem>
                     <GridItem colSpan={1}>
@@ -209,6 +229,7 @@ const NuevoEmpleadoScreen = () => {
                         requir="true"
                         name="telefono"
                         label="Celular"
+                        ext={9}
                         placeholder="0000-0000"
                       />
                     </GridItem>
@@ -230,18 +251,20 @@ const NuevoEmpleadoScreen = () => {
                   <SimpleGrid columns={2} columnGap={3} rowGap={6} w="full">
                     <GridItem colSpan={1}>
                       <FormikControl
-                        control="select"
                         requir="true"
+                        control="select"
                         label="Cargo a Asignar"
+                        placeholder="Seleccione un cargo"
                         name="cargo"
                         options={cargo}
                       />
                     </GridItem>
                     <GridItem colSpan={1}>
                       <FormikControl
-                        control="select"
                         requir="true"
+                        control="select"
                         label="Departamento a Asignar"
+                        placeholder="Seleccione un departamento"
                         name="departamento"
                         options={departamento}
                       />

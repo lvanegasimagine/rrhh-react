@@ -21,6 +21,7 @@ import FormikControl from '../../utils/FormikControl';
 import { FaSync, FaArrowLeft } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { SpinnerStyled } from '../../styled/Spinner';
+import * as Yup from 'yup';
 
 const EditarEmpleadoScreen = () => {
   const { id } = useParams();
@@ -107,6 +108,32 @@ const EditarEmpleadoScreen = () => {
     sexo: data?.sexo,
   };
 
+  const validationSchema = Yup.object({
+    nombre: Yup.string().required('El Nombre es Obligatorio')
+            .max(20, 'El Nombre debe tener menos de 20 caracteres')
+            .min(1, 'El Nombre debe tener mas de 5 caracteres'),
+    apellido: Yup.string().required('El Apellido es Obligatorio')
+            .max(20, 'El Nombre debe tener menos de 20 caracteres')
+            .min(1, 'El Nombre debe tener mas de 5 caracteres'),
+    correo_electronico: Yup.string().required('El Correo Electronico es Obligatorio')
+            .email('El Correo Electronico no es valido'),
+    cedula: Yup.string().required('La Cedula es Obligatoria')
+            .max(16, 'Cedula debe tener 16 caracteres incluido -')
+            .min(16, ''),
+    telefono: Yup.string().required('El Telefono es Obligatorio')
+            .max(9, 'Celular debe tener 9 caracteres incluido -')
+            .min(9, ''),
+    cargo: Yup.string().required('El Cargo es Obligatorio'),
+    departamento: Yup.string().required('El Departamento es Obligatorio'),
+    direccion: Yup.string().required('La Direccion es Obligatoria')
+              .max(250, 'La Direccion debe tener maximo de 250 caracteres')
+              .min(5, 'La Direccion debe tener minimo de 5 caracteres'),
+    estado_civil: Yup.string().required('El Estado Civil es Obligatorio'),
+    fecha_nacimiento: Yup.string().required('La Fecha de Nacimiento es Obligatoria'),
+    ciudad_nacimiento: Yup.string().required('La Ciudad de Nacimiento es Obligatoria'),
+    sexo: Yup.string().required('El Sexo es Obligatorio'),
+  });
+
   const onSubmit = (values, actions) => {
     console.log('Form Data', values);
     mutateAsync(
@@ -125,7 +152,7 @@ const EditarEmpleadoScreen = () => {
   return (
     <Formik
       initialValues={initialValues}
-      // validationSchema={validationSchema}
+      validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
       {formik => {

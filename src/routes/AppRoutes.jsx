@@ -1,7 +1,7 @@
 import { Container } from '@chakra-ui/react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
-import { ListaEmpleadoScreen, NuevoEmpleadoScreen, EditarEmpleadoScreen  } from '../pages/Empleado';
+import { ListarEmpleadoScreen, NuevoEmpleadoScreen, EditarEmpleadoScreen  } from '../pages/Empleado';
 import { ListarDepartamentoScreen, NuevoDepartamentoScreen, EditarDepartamentoScreen } from '../pages/Departamento';
 import { ListarCargoScreen, NuevoCargoScreen, EditarCargoScreen } from '../pages/Cargo';
 import { DashboardScreen } from '../pages/Dashboard';
@@ -37,7 +37,7 @@ const AppRoutes = () => {
               />
               <Route
                 path="listar-empleado"
-                element={user ? <ListaEmpleadoScreen /> : <Navigate to="/login" replace />}
+                element={user ? <ListarEmpleadoScreen /> : <Navigate to="/login" replace />}
               />
               <Route
                 path="nuevo-departamento"

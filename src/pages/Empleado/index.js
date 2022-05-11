@@ -1,5 +1,5 @@
 import EditarEmpleadoScreen from "./EditarEmpleadoScreen";
-import ListaEmpleadoScreen from "./ListaEmpleadoScreen";
+import ListarEmpleadoScreen from "./ListarEmpleadoScreen";
 import NuevoEmpleadoScreen from "./NuevoEmpleadoScreen";
 
-export { EditarEmpleadoScreen, ListaEmpleadoScreen, NuevoEmpleadoScreen };
+export { EditarEmpleadoScreen, ListarEmpleadoScreen, NuevoEmpleadoScreen };

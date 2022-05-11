@@ -10,6 +10,8 @@ import {
 function SelectChakra(props) {
   const { label, name, options, ...rest } = props;
 
+  console.log(options)
+
   return (
     <FormControl isRequired pt={10}>
       <FormLabel htmlFor={name}>{label}</FormLabel>
