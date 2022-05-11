@@ -13,6 +13,7 @@ import { FaPlus } from 'react-icons/fa';
 import { Link as ReachLink } from 'react-router-dom';
 import { useQueryCargo } from '../../hooks/useMutate';
 import { AlertStyled } from '../../styled/AlertStyled';
+import { AlertInfo } from '../../styled/AlertInfo';
 import { SpinnerStyled } from '../../styled/Spinner';
 import CargoItemScreen from './CargoItemScreen';
 
@@ -29,7 +30,16 @@ const ListarCargoScreen = () => {
   }
 
   if (isError) {
-    return <AlertStyled error={isError} />;
+    return (
+      <>
+        <AlertStyled error={isError} />
+        <ReachLink to="/nuevo-cargo">
+          <Button leftIcon={<FaPlus />} colorScheme="teal" variant="solid">
+            Agregar Cargo
+          </Button>
+        </ReachLink>
+      </>
+    );
   }
 
   return (
@@ -42,23 +52,27 @@ const ListarCargoScreen = () => {
           </Button>
         </ReachLink>
       </Stack>
-      <TableContainer p={'2.5'}>
-        <Table variant="simple">
-          <Thead>
-            <Tr>
-              <Th>Cargo</Th>
-              <Th>Departamento</Th>
-              <Th>Descripcion</Th>
-              <Th>Tools</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {data?.map(cargo => (
-              <CargoItemScreen key={cargo._id} {...cargo} />
-            ))}
-          </Tbody>
-        </Table>
-      </TableContainer>
+      {data?.length === 0 ? (
+        <AlertInfo stat="info" contenido="No hay Cargos Actualmente" />
+      ) : (
+        <TableContainer p={'2.5'}>
+          <Table variant="simple">
+            <Thead>
+              <Tr>
+                <Th>Cargo</Th>
+                <Th>Departamento</Th>
+                <Th>Descripcion</Th>
+                <Th>Tools</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {data?.map(cargo => (
+                <CargoItemScreen key={cargo._id} {...cargo} />
+              ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      )}
     </>
   );
 };

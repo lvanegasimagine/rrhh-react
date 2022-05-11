@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Container,
   Flex,
@@ -16,7 +15,6 @@ import {
   getDepartamento,
   updateDepartamento,
 } from '../../api/departamentoResponse';
-import TextField from '../../styled/TextField';
 import { FaArrowLeft, FaSync } from 'react-icons/fa';
 import { AlertStyled } from '../../styled/AlertStyled';
 import FormikControl from '../../utils/FormikControl';
@@ -94,13 +92,13 @@ const EditarDepartamentoScreen = () => {
         return (
           <Form
             as="form"
-            paddingTop={'35'}
+            pt={'35'}
             w="100%"
             p={4}
             onSubmit={formik.handleSubmit}
             autoComplete="off"
           >
-            <Text fontSize="2xl" paddingTop={'35'} paddingBottom={'2'}>
+            <Text fontSize="2xl" pt={'35'} paddingBottom={'2'}>
               Actualizar departamento
             </Text>
             <hr />

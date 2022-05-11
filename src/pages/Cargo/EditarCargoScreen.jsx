@@ -98,8 +98,8 @@ const EditarCargoScreen = () => {
     >
       {formik => {
         return (
-          <Form as="form" paddingTop={'35'} w="100%" p={4} autoComplete="off">
-            <Text fontSize="2xl" paddingTop={'35'} paddingBottom={'2'}>
+          <Form as="form" pt={'35'} w="100%" p={4} autoComplete="off">
+            <Text fontSize="2xl" pt={'35'} paddingBottom={'2'}>
               Actualizar Cargo
             </Text>
             <hr />

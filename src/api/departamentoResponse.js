@@ -3,13 +3,18 @@ import axios from 'axios';
 const API = 'http://localhost:4000/api/v1';
 
 export const getDepartamentos = async () => {
-  const { data } = await axios.get(`${API}/departamento`, {
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-    },
-  });
-  return data;
+  try {
+    const { data } = await axios.get(`${API}/departamento`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+    });
+    return data;
+    
+  } catch (error) {
+    throw new Error(error);
+  }
 };
 
 export const getDepartamento = async ({ queryKey }) => {

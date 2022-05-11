@@ -50,11 +50,11 @@ const NuevoDepartamentoScreen = () => {
       {(formik) => {
         return (
           <>
-            <Text fontSize="2xl" paddingTop={'35'} paddingBottom={'2'}>
+            <Text fontSize="2xl" pt={'35'} paddingBottom={'2'}>
               Nuevo departamento
             </Text>
             <hr />
-            <Form as="form" paddingTop={'35'} w="100%" p={4} autoComplete="off" onSubmit={formik.handleSubmit}>
+            <Form as="form" pt={'35'} w="100%" p={4} autoComplete="off" onSubmit={formik.handleSubmit}>
               <FormikControl
                 control="chakraInput"
                 label="Nombre departamento"

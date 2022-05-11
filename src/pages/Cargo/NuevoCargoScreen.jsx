@@ -127,7 +127,7 @@ const NuevoCargoScreen = () => {
                   Guardar
                 </Button>
               )}
-              <Link to="/listar-departamento">
+              <Link to="/listar-cargo">
                 <Button
                   leftIcon={<FaArrowLeft />}
                   colorScheme="orange"

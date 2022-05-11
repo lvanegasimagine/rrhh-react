@@ -13,6 +13,7 @@ import {
 import { FaPlus } from 'react-icons/fa';
 import { Link as ReachLink } from 'react-router-dom';
 import { useQueryDepartamento } from '../../hooks/useMutate';
+import { AlertInfo } from '../../styled/AlertInfo';
 import { AlertStyled } from '../../styled/AlertStyled';
 import { SpinnerStyled } from '../../styled/Spinner';
 import DepartamentoItemScreen from './DepartamentoItemScreen';
@@ -51,26 +52,30 @@ const ListarDepartamentoScreen = () => {
           </Button>
         </ReachLink>
       </Stack>
-      <TableContainer p={'2.5'}>
-        <Table variant="simple">
-          <Thead>
-            <Tr>
-              <Th>Nombre</Th>
-              <Th>Correo Electronico</Th>
-              <Th>Telefono de Area</Th>
-              <Th>Tools</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {data?.map(departamento => (
-              <DepartamentoItemScreen
-                key={departamento._id}
-                {...departamento}
-              />
-            ))}
-          </Tbody>
-        </Table>
-      </TableContainer>
+      {data?.length === 0 ? (
+       <AlertInfo stat='info' contenido='No hay Departamentos Actualmente'/>
+      ) : (
+        <TableContainer p={'2.5'}>
+          <Table variant="simple">
+            <Thead>
+              <Tr>
+                <Th>Nombre</Th>
+                <Th>Correo Electronico</Th>
+                <Th>Telefono de Area</Th>
+                <Th>Tools</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {data?.map(departamento => (
+                <DepartamentoItemScreen
+                  key={departamento._id}
+                  {...departamento}
+                />
+              ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      )}
     </>
   );
 };
