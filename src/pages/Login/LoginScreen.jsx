@@ -1,75 +1,88 @@
-import { Button, Text, Heading, VStack } from '@chakra-ui/react';
+import {
+  Button,
+  Text,
+  Heading,
+  VStack,
+  FormControl,
+  FormLabel,
+  Input,
+  useToast,
+  Alert,
+  AlertIcon,
+} from '@chakra-ui/react';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useLogin } from '../../hooks/useLogin';
 import { BsBoxArrowInRight } from 'react-icons/bs';
 import { Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import TextField from '../../styled/TextField';
+import { useState } from 'react';
 
 const LoginScreen = () => {
-  let navigate = useNavigate();
-  
-  const { login, error, isPending } = useLogin();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('dinosaurio@dinosaurio.com');
+  const [password, setPassword] = useState('123456');
 
-  console.log('aca',error);
+  const { login, error: errordelogueo, isPending } = useLogin();
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (email.trim() === '' || password.trim() === '') {
+      return alert('Por favor, rellene todos los campos');
+    } else {
+      login(email, password);
+      // navigate('/');
+    }
+  };
 
   return (
-    <Formik
-      initialValues={{ email: 'dinosaurio@dinosaurio.com', password: '123456' }}
-      validationSchema={Yup.object({
-        email: Yup.string()
-          .required('Correo Obligatorio')
-          .email('Correo Invalido'),
-        password: Yup.string()
-          .required('Contraseña Obligatoria')
-          .min(6, 'Contraseña debe tener al menos 6 caracteres'),
-      })}
-      onSubmit={(values, actions) => {
-        const { email, password } = values;
-        login(email, password);
-        navigate('/');
-        actions.resetForm();
-      }}
-    >
-      {formik => (
-        <VStack
-          as="form"
-          mx="auto"
-          w={{ base: '90%', md: 500 }}
-          h="90vh"
-          justifyContent="center"
-          onSubmit={formik.handleSubmit}
-          autoComplete="off"
-        >
-          <Heading pb={10}>Login</Heading>
-          <TextField
-            requir={true}
-            name="email"
-            label="Correo Electronico"
-            placeholder="Digita tu Correo Electronico"
+    <>
+      <VStack
+        as="form"
+        mx="auto"
+        w={{ base: '90%', md: 500 }}
+        h="90vh"
+        justifyContent="center"
+        onSubmit={handleSubmit}
+        autoComplete="off"
+      >
+        {errordelogueo && (
+          <Alert status="error" color={'red'}>
+            <AlertIcon />
+            {errordelogueo}
+          </Alert>
+        )}
+        <Heading pb={10}>Login</Heading>
+        <FormControl pt={10}>
+          <FormLabel htmlFor="email">Correo Electronico: </FormLabel>
+          <Input
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
           />
-          <TextField
-            requir={true}
-            name="password"
+        </FormControl>
+        <FormControl pt={10} pb={5}>
+          <FormLabel htmlFor="password">Contraseña: </FormLabel>
+          <Input
             type="password"
-            label="Contraseña"
-            placeholder="Digita tu Contraseña"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
           />
+        </FormControl>
 
-          {!isPending && (
-            <Button type="submit" colorScheme="blue">
-              <BsBoxArrowInRight /> &nbsp; Login
-            </Button>
-          )}
-          {isPending && (
-            <Button type="submit" colorScheme="blue">
-              Loading...
-            </Button>
-          )}
-        </VStack>
-      )}
-    </Formik>
+        {!isPending && (
+          <Button type="submit" size={'lg'} colorScheme="blue">
+            <BsBoxArrowInRight /> &nbsp; Login
+          </Button>
+        )}
+        {isPending && (
+          <Button type="submit" size={'lg'} colorScheme="blue">
+            Loading...
+          </Button>
+        )}
+      </VStack>
+    </>
   );
 };
 

@@ -61,9 +61,6 @@ const NuevoEmpleadoScreen = () => {
     value: departamento._id,
   }));
 
-  console.log('lista departamento', departamento)
-
-
   const initialValues = {
     nombre: 'Clark',
     apellido: 'Kent',
@@ -106,7 +103,6 @@ const NuevoEmpleadoScreen = () => {
   });
 
   const onSubmit = (values, actions) => {
-    console.log(values);
     mutate(values, {
       onSuccess: () => {
         actions.resetForm();
