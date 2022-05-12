@@ -1,26 +1,19 @@
 import {
   Button,
-  Text,
   Heading,
   VStack,
   FormControl,
   FormLabel,
   Input,
-  useToast,
   Alert,
   AlertIcon,
 } from '@chakra-ui/react';
 import React from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
 import { useLogin } from '../../hooks/useLogin';
 import { BsBoxArrowInRight } from 'react-icons/bs';
-import { Formik, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import TextField from '../../styled/TextField';
 import { useState } from 'react';
 
 const LoginScreen = () => {
-  const navigate = useNavigate();
   const [email, setEmail] = useState('dinosaurio@dinosaurio.com');
   const [password, setPassword] = useState('123456');
 
@@ -32,7 +25,6 @@ const LoginScreen = () => {
       return alert('Por favor, rellene todos los campos');
     } else {
       login(email, password);
-      // navigate('/');
     }
   };
 
