@@ -2,14 +2,12 @@ import {
   Table,
   TableContainer,
   Tbody,
-  Td,
   Text,
   Th,
   Thead,
   Tr,
   Button,
   Stack,
-  IconButton,
 } from '@chakra-ui/react';
 import { FaPlus } from 'react-icons/fa';
 import { Link as ReachLink } from 'react-router-dom';

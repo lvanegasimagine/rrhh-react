@@ -11,10 +11,10 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getEmpleado, updateEmpleado } from '../../api/empleadoResponse';
-import { useQueryCargo, useQueryDepartamento } from '../../hooks/useMutate';
+import { updateEmpleado } from '../../api/empleadoResponse';
+import { useQueryCargo, useQueryDepartamento, useQueryEmpleadoById } from '../../hooks/useMutate';
 import { AlertStyled } from '../../styled/AlertStyled';
 import { Form, Formik } from 'formik';
 import FormikControl from '../../utils/FormikControl';
@@ -28,10 +28,7 @@ const EditarEmpleadoScreen = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const { data, isLoading, isError, error } = useQuery(
-    ['empleado', { id }],
-    getEmpleado
-  );
+  const { data, isLoading, isError, error } = useQueryEmpleadoById(id);
   const { data: departamentoList, isLoading: loadingDepartamento } =
     useQueryDepartamento();
 
@@ -160,7 +157,7 @@ const EditarEmpleadoScreen = () => {
           <>
             <Container maxW="container.xl" p={0}>
               <Text fontSize="2xl" pt={'35'} paddingBottom={'2'}>
-                Nuevo Empleado
+                Actualizar Empleado
               </Text>
               <hr />
               <Flex

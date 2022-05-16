@@ -34,7 +34,7 @@ const EditarCargoScreen = () => {
 
   const { mutateAsync, isLoading: isMutating } = useMutation(updateCargo);
 
-  if (isLoading) {
+  if (isLoading && departamentoLoading) {
     return (
       <Container>
         <Flex py="5" justifyContent="center">

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = 'http://localhost:4000/api/v1';
+const API = 'https://rrhh-react.herokuapp.com/api/v1';
 
 export const getCargos = async () => {
   const { data } = await axios.get(`${API}/cargo`);
@@ -8,6 +8,7 @@ export const getCargos = async () => {
 };
 
 export const getCargo = async ({ queryKey }) => {
+  // eslint-disable-next-line no-unused-vars
   const [_key, { id }] = queryKey;
   const { data } = await axios.get(`${API}/cargo/${id}`);
   return data;

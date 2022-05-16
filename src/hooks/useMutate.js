@@ -1,13 +1,22 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { createCargo, getCargoCount, getCargos } from '../api/cargoResponse';
-import { createDepartamento, getDepartamentoCount, getDepartamentos } from '../api/departamentoResponse';
-import { createEmpleado, getEmpleadoCount, getEmpleados } from '../api/empleadoResponse';
+import {
+  createDepartamento,
+  getDepartamentoCount,
+  getDepartamentos,
+} from '../api/departamentoResponse';
+import {
+  createEmpleado,
+  getEmpleado,
+  getEmpleadoCount,
+  getEmpleados,
+} from '../api/empleadoResponse';
 
 const options = {
   retry: 2,
   retryDelay: 1000,
   cacheTime: 3000,
-}
+};
 
 export function useMutateDepartamento() {
   const queryClient = useQueryClient();
@@ -31,9 +40,7 @@ export function useMutateCargo() {
 
   return useMutation(createCargo, {
     onsuccess: data => {
-      queryClient.setQueryData(['cargo'], prevCargo =>
-        prevCargo.concat(data)
-      );
+      queryClient.setQueryData(['cargo'], prevCargo => prevCargo.concat(data));
       queryClient.invalidateQueries(['cargo']);
     },
   });
@@ -44,7 +51,11 @@ export function useQueryCargo() {
 }
 
 export function useQueryEmpleado() {
-  return useQuery(['empleado'], getEmpleados, options)
+  return useQuery(['empleado'], getEmpleados, options);
+}
+
+export function useQueryEmpleadoById(id) {
+  return useQuery(['empleado', { id }], getEmpleado);
 }
 
 export function useMutateEmpleado() {
@@ -60,15 +71,14 @@ export function useMutateEmpleado() {
   });
 }
 
-export function useQueryCountDepartamento(){
-  return useQuery(['departamentoCount'], getDepartamentoCount,options)
+export function useQueryCountDepartamento() {
+  return useQuery(['departamentoCount'], getDepartamentoCount, options);
 }
 
-export function useQueryCountEmpleado(){
-  return useQuery(['empleadoCount'], getEmpleadoCount , options)
+export function useQueryCountEmpleado() {
+  return useQuery(['empleadoCount'], getEmpleadoCount, options);
 }
 
-export function useQueryCountCargo(){
-  return useQuery(['cargoCount'], getCargoCount, options)
+export function useQueryCountCargo() {
+  return useQuery(['cargoCount'], getCargoCount, options);
 }
-

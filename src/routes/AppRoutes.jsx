@@ -5,6 +5,7 @@ import {
   ListarEmpleadoScreen,
   NuevoEmpleadoScreen,
   EditarEmpleadoScreen,
+  ViewEmpleadoScreen
 } from '../pages/Empleado';
 import {
   ListarDepartamentoScreen,
@@ -71,6 +72,16 @@ const AppRoutes = () => {
                 element={
                   user ? (
                     <ListarEmpleadoScreen />
+                  ) : (
+                    <Navigate to="/login" replace />
+                  )
+                }
+              />
+              <Route
+                path="detalle-empleado/:id"
+                element={
+                  user ? (
+                    <ViewEmpleadoScreen />
                   ) : (
                     <Navigate to="/login" replace />
                   )

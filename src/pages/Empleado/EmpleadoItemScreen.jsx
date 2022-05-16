@@ -44,7 +44,7 @@ const EmpleadoItemScreen = ({
             colorScheme="green"
             aria-label="Search database"
             icon={<FaEye />}
-            to={`/`}
+            to={`/detalle-empleado/${_id}`}
           />
           <IconButton
             as={ReachLink}

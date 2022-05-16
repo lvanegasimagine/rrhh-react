@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = 'http://localhost:4000/api/v1';
+const API = 'https://rrhh-react.herokuapp.com/api/v1';
 
 export const getEmpleados = async _ => {
     try {
@@ -12,6 +12,7 @@ export const getEmpleados = async _ => {
 }
 
 export const getEmpleado = async ({ queryKey }) => {
+    // eslint-disable-next-line no-unused-vars
     const [_key, { id }] = queryKey;
 
     try {
