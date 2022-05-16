@@ -26,7 +26,7 @@ const NuevoCargoScreen = () => {
   }));
 
   const initialValues = {
-    nombre_cargo: 'hola2',
+    nombre_cargo: '',
     departamento: '',
     descripcion: '',
   };

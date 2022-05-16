@@ -62,17 +62,17 @@ const NuevoEmpleadoScreen = () => {
   }));
 
   const initialValues = {
-    nombre: 'Clark',
-    apellido: 'Kent',
-    correo_electronico: 'mundo@mund.com',
-    cedula: '001-020565-0010H',
-    telefono: '9874-8561',
+    nombre: '',
+    apellido: '',
+    correo_electronico: '',
+    cedula: '',
+    telefono: '',
     cargo: '',
     departamento: '',
-    direccion: 'Metropolis wey',
+    direccion: '',
     estado_civil: '',
-    fecha_nacimiento: '2022-02-01',
-    ciudad_nacimiento: 'Managua, Nicaragua',
+    fecha_nacimiento: '',
+    ciudad_nacimiento: '',
     sexo: '',
   };
 

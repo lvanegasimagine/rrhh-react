@@ -14,9 +14,9 @@ import { BsFillPersonCheckFill } from 'react-icons/bs';
 import { useState } from 'react';
 
 const RegistroScreen = () => {
-  const [email, setEmail] = useState('dinosaurio@dinosaurio.com');
-  const [password, setPassword] = useState('123456');
-  const [displayName, setDisplayName] = useState('Glory');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [displayName, setDisplayName] = useState('');
 
   const { signup, isPending, error } = useSignup();
 

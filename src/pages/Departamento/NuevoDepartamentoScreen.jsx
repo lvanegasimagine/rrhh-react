@@ -13,9 +13,9 @@ const NuevoDepartamentoScreen = () => {
   const { mutate, isError, isLoading } = useMutateDepartamento();
 
   const initialValues = {
-    nombre_departamento: 'hola2',
-    email_corporativo: 'mundo@mund.com',
-    telefono_corporativo: '9874561',
+    nombre_departamento: '',
+    email_corporativo: '',
+    telefono_corporativo: '',
   };
 
   const validationSchema = Yup.object({
