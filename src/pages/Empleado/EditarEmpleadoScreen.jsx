@@ -132,7 +132,6 @@ const EditarEmpleadoScreen = () => {
   });
 
   const onSubmit = (values, actions) => {
-    console.log('Form Data', values);
     mutateAsync(
       { ...values, id },
       {
@@ -182,7 +181,7 @@ const EditarEmpleadoScreen = () => {
                     <GridItem colSpan={1}>
                       <FormikControl
                         control="chakraInput"
-                        label="Nombre departamento"
+                        label="Nombre Empleado"
                         name="nombre"
                       />
                     </GridItem>

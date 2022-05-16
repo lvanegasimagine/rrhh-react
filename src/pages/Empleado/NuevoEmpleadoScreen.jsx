@@ -151,7 +151,7 @@ const NuevoEmpleadoScreen = () => {
                       <FormikControl
                         requir='true'
                         control="chakraInput"
-                        label="Nombre departamento"
+                        label="Nombre Empleado"
                         name="nombre"
                       />
                     </GridItem>

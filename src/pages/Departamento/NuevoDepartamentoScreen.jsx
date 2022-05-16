@@ -29,7 +29,6 @@ const NuevoDepartamentoScreen = () => {
   });
 
   const onSubmit = (values, actions) => {
-    console.log(values);
     mutate(values, {
       onSuccess: () => {
         actions.resetForm();

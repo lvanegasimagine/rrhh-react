@@ -76,7 +76,6 @@ const EditarCargoScreen = () => {
   });
 
   const onSubmit = (values, actions) => {
-    console.log('Form Data', values);
     mutateAsync(
       { ...values, id },
       {
