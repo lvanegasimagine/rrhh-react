@@ -100,9 +100,9 @@ const MenuLinks = ({ isOpen }) => {
             <Link to="listar-departamento" {...linkProps}>
               <Text>Departamento</Text>
             </Link>
-            <Link to="listar-departamento" {...linkProps}>
+            {/* <Link to="listar-departamento" {...linkProps}>
               <Text>Editar Usuario</Text>
-            </Link>
+            </Link> */}
             <Button
               leftIcon={<FaShareSquare />}
               variant="solid"
